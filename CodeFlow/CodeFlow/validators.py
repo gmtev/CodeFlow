@@ -66,3 +66,24 @@ class UsernameValidator:
         for ch in value:
             if not ch.isalnum() and ch not in ['_', '-', '.', '@']:
                 raise ValidationError(self.message)
+
+
+@deconstructible
+class TitleValidator:
+    def __init__(self, message=None):
+        self.message = message
+
+    @property
+    def message(self):
+        return self.__message
+
+    @message.setter
+    def message(self, value):
+        if value is None:
+            self.__message = "The title must contain letters only!"
+        else:
+            self.__message = value
+
+    def __call__(self, value, *args, **kwargs):
+        if not value.isalpha():
+            raise ValidationError(self.message)

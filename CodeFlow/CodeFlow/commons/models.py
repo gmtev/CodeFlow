@@ -14,7 +14,7 @@ class Comment(models.Model):
             models.Index(fields=['created_at']),
         ]
         ordering = ['-created_at']
-    user = models.ForeignKey(
+    author = models.ForeignKey(
         to=UserModel,
         on_delete=models.CASCADE,
     )

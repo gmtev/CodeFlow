@@ -80,7 +80,7 @@ WSGI_APPLICATION = 'CodeFlow.wsgi.application'
 DATABASES = {
     "default": {
         "ENGINE": "django.db.backends.postgresql",
-        "NAME": "mydatabase",
+        "NAME": "codeflow",
         "USER": "postgres",
         "PASSWORD": "postgres",
         "HOST": "127.0.0.1",
