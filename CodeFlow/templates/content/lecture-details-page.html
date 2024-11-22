@@ -1,0 +1,61 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<h1>{{ lecture.lecture_title }}</h1>
+<p>{{ lecture.text }}</p>
+<p>Written by: {{ lecture.author }}</p>
+<p>Created at: {{ lecture.created_at }}</p>
+<!-- Like Section -->
+<div class="like-section">
+{% if user.is_authenticated %}
+    <form action="{% url 'like' 'lecture' lecture.id %}" method="post">
+        {% csrf_token %}
+        {% if user_has_liked %}
+            <button type="submit" class="btn btn-danger">Unlike</button>
+        {% else %}
+            <button type="submit" class="btn btn-primary">Like</button>
+        {% endif %}
+    </form>
+    <p>{{ likes.count }} {{ likes.count|pluralize:"like,likes" }}</p>
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to like this lecture.</p>
+{% endif %}
+</div>
+
+<!-- Edit and Delete Buttons -->
+{% if request.user == lecture.author %}
+    <a href="{% url 'lecture-edit' lecture.slug %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'lecture-delete' lecture.slug %}" class="btn btn-danger">Delete</a>
+{% endif %}
+
+<a href="{% url 'lectures' %}" class="btn btn-secondary">Back to Lectures</a>
+
+<hr>
+
+<!-- Comment Section -->
+<h2>Comments</h2>
+<div class="comments">
+    {% for comment in comments %}
+        <div class="comment">
+            <p><strong>{{ comment.author }}</strong> said:</p>
+            <p>{{ comment.content }}</p>
+            <p class="text-muted">{{ comment.created_at }}</p>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No comments yet. Be the first to comment!</p>
+    {% endfor %}
+</div>
+
+<!-- Comment Form -->
+{% if user.is_authenticated %}
+    <form action="{% url 'comment' 'lecture' lecture.id %}" method="post">
+        {% csrf_token %}
+        <textarea name="content" id="content" rows="4" class="form-control" placeholder="Write a comment..." required></textarea>
+        <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+    </form>
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to post a comment.</p>
+{% endif %}
+
+{% endblock %}

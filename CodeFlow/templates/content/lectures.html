@@ -1,0 +1,13 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<h1>All Lectures</h1>
+<ul>
+    {% for lecture in lectures %}
+        <li>
+            <a href="{% url 'lecture-details' lecture.slug %}">{{ lecture.lecture_title }}</a>
+        </li>
+    {% endfor %}
+</ul>
+<a href="{% url 'lecture-create' %}" class="btn btn-primary">Create a lecture</a>
+{% endblock %}

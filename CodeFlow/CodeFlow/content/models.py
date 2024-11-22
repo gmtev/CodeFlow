@@ -95,3 +95,10 @@ class Lecture(models.Model):
     def __str__(self):
         return f"{self.lecture_title} by {self.author}."
 
+    def save(self, *args, **kwargs):
+        super().save(*args, **kwargs)
+
+        if not self.slug:
+            self.slug = slugify(f"{self.lecture_title}-{self.pk}")
+
+        super().save(*args, **kwargs)

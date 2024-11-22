@@ -1,0 +1,26 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="card shadow" style="width: 400px;">
+        
+        <!-- Title Section -->
+        <div class="card-header text-white text-center" style="background-color: #ff6600; padding-bottom: 20px;">
+            <h3>Register</h3>
+        </div>
+        
+        <!-- Form Section -->
+        <div class="card-body p-4" style="margin-top: 10px;">
+            <form method="post">
+                {% csrf_token %}
+                {{ form.as_p }}
+                
+                <!-- Submit Button -->
+                <div class="d-flex justify-content-center mt-4">
+                    <button type="submit" class="btn btn-primary">Register</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

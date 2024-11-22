@@ -1,0 +1,29 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+<div class="text-center mt-5">
+    
+{#    <img src="{% static 'images/thematic_image.jpg' %}" alt="Thematic" class="img-fluid mb-4" style="max-width: 500px;">#}
+
+    <h1>Welcome to CodeFlow!</h1>
+    <p class="lead mb-4">Your platform for collaborative learning and coding discussions.</p>
+
+    {% if is_authenticated %}
+
+        <div class="d-grid gap-2 d-sm-flex justify-content-center">
+            <a href="{% url 'lectures' %}" class="btn btn-primary btn-lg">
+                <i class="bi bi-book"></i> Lectures
+            </a>
+            <a href="{% url 'questions' %}" class="btn btn-secondary btn-lg">
+                <i class="bi bi-question-circle"></i> Questions
+            </a>
+        </div>
+    {% else %}
+
+        <p class="mt-4">
+            <a href="{% url 'register' %}" class="btn btn-success btn-lg me-2">Create an Account</a>
+            <a href="{% url 'login' %}" class="btn btn-warning btn-lg">Log Into an Existing One</a>
+        </p>
+    {% endif %}
+</div>
+{% endblock %}

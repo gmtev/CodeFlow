@@ -33,7 +33,7 @@ class Comment(models.Model):
     )
 
     def __str__(self):
-        return f"Comment by {self.user} on {self.content_object}"
+        return f"Comment by {self.author} on {self.content_object}"
 
 class Like(models.Model):
     user = models.ForeignKey(

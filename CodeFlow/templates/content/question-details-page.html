@@ -1,0 +1,64 @@
+{% extends 'common/base.html' %}
+
+{% block content %}
+<h1>{{ question.question_title }}</h1>
+<p>{{ question.text }}</p>
+<p>Asked by: {{ question.author }}</p>
+<p>Created at: {{ question.created_at }}</p>
+    {% if question.picture %}
+<img src="{{ question.picture }}" alt="Question Image" class="img-fluid" />
+    {% endif %}
+<!-- Like Section -->
+<div class="like-section">
+{% if user.is_authenticated %}
+    <form action="{% url 'like' 'question' question.id %}" method="post">
+        {% csrf_token %}
+        {% if user_has_liked %}
+            <button type="submit" class="btn btn-danger">Unlike</button>
+        {% else %}
+            <button type="submit" class="btn btn-primary">Like</button>
+        {% endif %}
+    </form>
+    <p>{{ likes.count }} {{ likes.count|pluralize:"like,likes" }}</p>
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to like this question.</p>
+{% endif %}
+</div>
+
+<!-- Edit and Delete Buttons -->
+{% if request.user == question.author %}
+    <a href="{% url 'question-edit' question.slug %}" class="btn btn-warning">Edit</a>
+    <a href="{% url 'question-delete' question.slug %}" class="btn btn-danger">Delete</a>
+{% endif %}
+
+<a href="{% url 'questions' %}" class="btn btn-secondary">Back to Questions</a>
+
+<hr>
+
+<!-- Comment Section -->
+<h2>Comments</h2>
+<div class="comments">
+    {% for comment in comments %}
+        <div class="comment">
+            <p><strong>{{ comment.author }}</strong> said:</p>
+            <p>{{ comment.content }}</p>
+            <p class="text-muted">{{ comment.created_at }}</p>
+        </div>
+        <hr>
+    {% empty %}
+        <p>No comments yet. Be the first to comment!</p>
+    {% endfor %}
+</div>
+
+<!-- Comment Form -->
+{% if user.is_authenticated %}
+    <form action="{% url 'comment' 'question' question.id %}" method="post">
+        {% csrf_token %}
+        <textarea name="content" id="content" rows="4" class="form-control" placeholder="Write a comment..." required></textarea>
+        <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
+    </form>
+{% else %}
+    <p><a href="{% url 'login' %}">Log in</a> to post a comment.</p>
+{% endif %}
+
+{% endblock %}
