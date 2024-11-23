@@ -51,6 +51,10 @@ class Question(models.Model):
         on_delete=models.CASCADE,
     )
 
+    is_answered = models.BooleanField(
+        default=False,
+    )
+
     def save(self, *args, **kwargs):
         super().save(*args, **kwargs)
 

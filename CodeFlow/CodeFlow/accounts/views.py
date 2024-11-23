@@ -30,7 +30,7 @@ class CustomUserRegisterView(CreateView):
 
 
 class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
-    model = Profile
+    model = UserModel
     template_name = 'accounts/profile-delete-page.html'
     success_url = reverse_lazy('login')
 
@@ -39,9 +39,17 @@ class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return self.request.user == profile.user
 
 
+
 class ProfileDetailView(LoginRequiredMixin, DetailView):
     model = UserModel
     template_name = 'accounts/profile-details-page.html'
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+
+        context['total_questions_count'] = self.object.question_set.count()
+        context['total_lectures_count'] = self.object.lecture_set.count()
+
+        return context
 
 
 class ProfileEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):

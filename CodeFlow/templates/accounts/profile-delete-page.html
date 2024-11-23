@@ -1,10 +1,23 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'common/base.html' %}
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-6 mx-auto">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title text-center">Are you sure you want to delete your profile?</h5>
+                    <p class="text-center">This action cannot be undone.</p>
 
-</body>
-</html>
+                    <form method="POST">
+                        {% csrf_token %}
+                        <div class="d-flex justify-content-around">
+                            <button type="submit" class="btn btn-danger">Delete Profile</button>
+                            <a href="{% url 'profile-details' object.pk %}" class="btn btn-secondary">Cancel</a>
+                        </div>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

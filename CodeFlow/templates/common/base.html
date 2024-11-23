@@ -11,7 +11,7 @@
     {% load static %}
     <link rel="stylesheet" href="{% static 'css/styles.css' %}">
 </head>
-<body>
+<body class="{% block body_class %}decorated{% endblock %}">
 <header>
     {% include 'common/nav.html' %}
 </header>
@@ -30,3 +30,4 @@
         Links: <a href="https://github.com/gmtev/CodeFlow/tree/main" class="text-white"><i class="bi bi-github"></i></a>
     </div>
 </footer>
+</html>

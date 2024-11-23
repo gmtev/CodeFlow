@@ -1,10 +1,42 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends 'common/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container my-4">
+    <div class="row">
+        <div class="col-md-4">
+            <!-- Profile Picture Section -->
+            <div class="card shadow-sm">
+                <div class="card-body text-center">
+                    {% if profile.profile_picture %}
+                        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 200px;">
+                    {% else %}
+                        <img src="{% static 'images/default-profile-pic.jpg' %}" alt="Default Profile Picture" class="img-fluid rounded-circle" style="max-width: 200px;">
+                    {% endif %}
+                    <h4 class="mt-3">{{ object.profile.get_full_name }}</h4>
+                    <p class="text-muted">{{ object.username }}</p>
+                    <p class="text-muted">{{ object.email }}</p>
+                    <p class="text-muted">Questions asked: {{ total_questions_count }}</p>
+                    <p class="text-muted">Lectures written: {{ total_lectures_count }}</p>
+                </div>
+            </div>
+        </div>
 
-</body>
-</html>
+        <div class="col-md-8">
+            <!-- Profile Information Section -->
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <h5 class="card-title">Profile Information</h5>
+                    <p><strong>First Name:</strong> {{ object.profile.first_name|default:"Not provided" }}</p>
+                    <p><strong>Last Name:</strong> {{ object.profile.last_name|default:"Not provided" }}</p>
+                    <p><strong>Username:</strong> {{ object.username }}</p>
+                    <p><strong>Email:</strong> {{ object.email }}</p>
+                    
+                    <!-- Edit Profile Button -->
+                    <a href="{% url 'profile-edit' object.pk %}" class="btn btn-warning">Edit Profile</a>
+                    <a href="{% url 'profile-delete' object.pk %}" class="btn btn-danger">Delete Profile</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% endblock %}

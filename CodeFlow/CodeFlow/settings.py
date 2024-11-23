@@ -143,3 +143,6 @@ AUTHENTICATION_BACKENDS = [
 ]
 LOGIN_REDIRECT_URL = reverse_lazy('home')
 LOGOUT_REDIRECT_URL = reverse_lazy('login')
+
+MAILJET_API_KEY = 'your_api'
+MAILJET_SECRET_KEY = 'your_secret'

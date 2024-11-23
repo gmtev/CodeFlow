@@ -1,33 +1,59 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-<h1>{{ lecture.lecture_title }}</h1>
-<p>{{ lecture.text }}</p>
-<p>Written by: {{ lecture.author }}</p>
-<p>Created at: {{ lecture.created_at }}</p>
-<!-- Like Section -->
-<div class="like-section">
-{% if user.is_authenticated %}
-    <form action="{% url 'like' 'lecture' lecture.id %}" method="post">
-        {% csrf_token %}
-        {% if user_has_liked %}
-            <button type="submit" class="btn btn-danger">Unlike</button>
-        {% else %}
-            <button type="submit" class="btn btn-primary">Like</button>
-        {% endif %}
-    </form>
-    <p>{{ likes.count }} {{ likes.count|pluralize:"like,likes" }}</p>
-{% else %}
-    <p><a href="{% url 'login' %}">Log in</a> to like this lecture.</p>
-{% endif %}
+<!-- Lecture Title and Information -->
+<div class="container my-4">
+    <h1>{{ lecture.lecture_title }}</h1>
+    <!-- Styled Lecture Text -->
+    <div class="form-group">
+        <label for="lectureText" class="h5">Lecture Content</label>
+        <div class="card p-4">
+
+                <p>{{ lecture.text }}</p> <!-- You can style this further -->
+
+        </div>
+    </div>
 </div>
 
-<!-- Edit and Delete Buttons -->
-{% if request.user == lecture.author %}
-    <a href="{% url 'lecture-edit' lecture.slug %}" class="btn btn-warning">Edit</a>
-    <a href="{% url 'lecture-delete' lecture.slug %}" class="btn btn-danger">Delete</a>
-{% endif %}
+<!-- Like, Edit, and Delete Buttons (aligned) -->
+<div class="card shadow-sm mb-4">
+    <div class="card-body d-flex justify-content-between align-items-center">
+        <!-- Like Section -->
+        <div class="d-flex">
+            {% if user.is_authenticated %}
+                <form action="{% url 'like' 'lecture' lecture.id %}" method="post" class="d-inline">
+                    {% csrf_token %}
+                    {% if user_has_liked %}
+                        <button type="submit" class="btn btn-danger btn-sm mr-2"><i class="bi bi-heart-fill"></i> Unlike</button>
+                    {% else %}
+                        <button type="submit" class="btn btn-primary btn-sm mr-2"><i class="bi bi-heart"></i> Like</button>
+                    {% endif %}
+                </form>
+            {% else %}
+                <p><a href="{% url 'login' %}">Log in</a> to like this lecture.</p>
+            {% endif %}
+        </div>
+        
+        <!-- Edit and Delete Buttons -->
+        {% if request.user == lecture.author %}
+            <div class="d-flex">
+                <a href="{% url 'lecture-edit' lecture.slug %}" class="btn btn-warning btn-sm mr-2">
+                    <i class="bi bi-pencil-square"></i> Edit
+                </a>
+                <a href="{% url 'lecture-delete' lecture.slug %}" class="btn btn-danger btn-sm">
+                    <i class="bi bi-trash"></i> Delete
+                </a>
+            </div>
+        {% endif %}
 
+        <!-- Likes Count -->
+        <div class="ml-3">
+            <p class="mb-0">{{ likes.count }} {{ likes.count|pluralize:"like,likes" }}</p>
+        </div>
+    </div>
+</div>
+
+<!-- Back to Lectures Button -->
 <a href="{% url 'lectures' %}" class="btn btn-secondary">Back to Lectures</a>
 
 <hr>
@@ -37,7 +63,7 @@
 <div class="comments">
     {% for comment in comments %}
         <div class="comment">
-            <p><strong>{{ comment.author }}</strong> said:</p>
+            <p><strong>{{ comment.author.username }}</strong> said:</p>
             <p>{{ comment.content }}</p>
             <p class="text-muted">{{ comment.created_at }}</p>
         </div>

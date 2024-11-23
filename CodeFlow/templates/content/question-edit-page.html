@@ -23,9 +23,13 @@
                     <label for="{{ form.picture.id_for_label }}" class="form-label">Picture</label>
                     {{ form.picture|add_class:"form-control" }}
                 </div>
+                <div class="mb-3">
+                    <label for="{{ form.is_answered.id_for_label }}" class="form-label">Answered</label>
+                    {{ form.is_answered|add_class:"form-check-input" }}
+                </div>
                 <div class="d-flex justify-content-between mt-4">
                     <button type="submit" class="btn btn-primary" style="width: 48%;">Save</button>
-                    <a href="{% url 'questions' %}" class="btn btn-secondary" style="width: 48%;">Cancel</a>
+                    <a href="{% url 'question-details' question.slug %}" class="btn btn-secondary" style="width: 48%;">Cancel</a>
                 </div>
             </form>
         </div>

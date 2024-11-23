@@ -9,24 +9,14 @@ from CodeFlow.content.forms import QuestionEditForm, QuestionCreateForm, Questio
 from CodeFlow.content.forms import LectureCreateForm, LectureDeleteForm, LectureEditForm
 from CodeFlow.commons.forms import CommentForm
 from CodeFlow.content.models import Question, Lecture
-# from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
+
 
 class QuestionListView(ListView):
     model = Question
     template_name = 'content/questions.html'
     context_object_name = 'questions'
-    # paginate_by = 5
+    paginate_by = 3
 
-# class QuestionDetailView(LoginRequiredMixin, DetailView):
-#     model = Question
-#     template_name = 'content/question-details-page.html'
-#     slug_url_kwarg = 'slug'
-#
-#     def get_context_data(self, **kwargs):
-#         context = super().get_context_data(**kwargs)
-#         context['comment_form'] = CommentForm()
-#
-#         return context
 
 class QuestionDetailView(DetailView):
     model = Question
@@ -46,7 +36,7 @@ class QuestionDetailView(DetailView):
         context['comment_form'] = CommentForm()
         return context
 
-class QuestionCreateView(CreateView):
+class QuestionCreateView(LoginRequiredMixin, CreateView):
     model = Question
     form_class = QuestionCreateForm
     template_name = 'content/question-create-page.html'
@@ -83,10 +73,7 @@ class QuestionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy(
-            'profile-details',
-            kwargs={
-                'pk': self.request.user.pk,
-            }
+            'questions'
         )
 
     def test_func(self):
@@ -108,7 +95,7 @@ class LectureListView(ListView):
     model = Lecture
     template_name = 'content/lectures.html'
     context_object_name = 'lectures'
-    # paginate_by = 5
+    paginate_by = 4
 
 class LectureDetailView(LoginRequiredMixin, DetailView):
     model = Lecture
@@ -128,7 +115,7 @@ class LectureDetailView(LoginRequiredMixin, DetailView):
         context['comment_form'] = CommentForm()
         return context
 
-class LectureCreateView(CreateView):
+class LectureCreateView(LoginRequiredMixin, CreateView):
     model = Lecture
     form_class = LectureCreateForm
     template_name = 'content/lecture-create-page.html'
@@ -164,10 +151,7 @@ class LectureDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
     def get_success_url(self):
         return reverse_lazy(
-            'profile-details',
-            kwargs={
-                'pk': self.request.user.pk,
-            }
+            'lectures'
         )
 
     def test_func(self):

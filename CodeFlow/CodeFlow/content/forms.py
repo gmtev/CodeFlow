@@ -27,8 +27,9 @@ class QuestionCreateForm(QuestionBaseForm):
 
 
 class QuestionEditForm(QuestionBaseForm):
-    pass
-
+    class Meta(QuestionBaseForm.Meta):
+        model = Question
+        fields = ['question_title', 'text', 'picture', 'is_answered']
 
 class QuestionDeleteForm(QuestionBaseForm):
     def __init__(self, *args, **kwargs):
@@ -47,7 +48,7 @@ class LectureBaseForm(forms.ModelForm):
         widgets = {
             'lecture_title': forms.TextInput(attrs={'placeholder': 'Title of lecture'}),
             'text': forms.Textarea(attrs={
-                'placeholder': 'Describe your question...',
+                'placeholder': 'Your learning material...',
                 'rows': 5
             }),
         }

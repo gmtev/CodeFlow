@@ -60,3 +60,34 @@
     text-decoration: underline;
 }
 
+
+
+.decorated::before,
+.decorated::after {
+    content: "";
+    position: fixed;
+    top: 0;
+    width: 80px;
+    height: 100%;
+    z-index: -1;
+    background: linear-gradient(to bottom, #1a1a1a, #333);
+    opacity: 0.7;
+    overflow: hidden;
+}
+
+.decorated::before {
+    left: 0;
+    background-image: url('/static/images/code-pattern.jpg');
+    background-repeat: repeat-y;
+    background-size: cover;
+    background-position: 0 0;
+}
+
+.decorated::after {
+    right: 0;
+    background-image: url('/static/images/code-pattern.jpg');
+    background-repeat: repeat-y;
+    background-size: cover;
+    background-position: 0 0;
+}
+
