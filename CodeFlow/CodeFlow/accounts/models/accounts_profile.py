@@ -2,7 +2,7 @@ from django.contrib.auth import get_user_model
 from django.core.validators import MinLengthValidator
 from django.db import models
 from CodeFlow.validators import ImageSizeValidator, NameLetterValidator
-
+from cloudinary.models import CloudinaryField
 UserModel = get_user_model()
 
 class Profile(models.Model):
@@ -35,14 +35,13 @@ class Profile(models.Model):
         null=True,
     )
 
-    profile_picture = models.ImageField(
+    profile_picture = CloudinaryField(
+        'image',
         blank=True,
         null=True,
-        upload_to='',
-        validators=[
-            ImageSizeValidator(MAX_IMAGE_SIZE),
-        ],
+        validators=[ImageSizeValidator(MAX_IMAGE_SIZE)]
     )
+
 
     def get_full_name(self):
         if self.first_name and self.last_name:

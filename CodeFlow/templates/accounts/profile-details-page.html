@@ -7,8 +7,8 @@
             <!-- Profile Picture Section -->
             <div class="card shadow-sm">
                 <div class="card-body text-center">
-                    {% if profile.profile_picture %}
-                        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 200px;">
+                    {% if object.profile.profile_picture %}
+                        <img src="{{ object.profile.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle" style="max-width: 200px;">
                     {% else %}
                         <img src="{% static 'images/default-profile-pic.jpg' %}" alt="Default Profile Picture" class="img-fluid rounded-circle" style="max-width: 200px;">
                     {% endif %}

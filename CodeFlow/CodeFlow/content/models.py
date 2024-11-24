@@ -1,3 +1,4 @@
+from cloudinary.models import CloudinaryField
 from django.contrib.auth import get_user_model
 from django.db import models
 from django.template.defaultfilters import slugify
@@ -50,7 +51,6 @@ class BaseContent(models.Model):
 
 
 class Question(BaseContent):
-    MAX_QUESTION_IMAGE_SIZE = 5
 
     class Meta(BaseContent.Meta):
         indexes = [
@@ -58,13 +58,11 @@ class Question(BaseContent):
         ]
         ordering = ['-created_at']
 
-    picture = models.ImageField(
+    picture = CloudinaryField(
+        'image',
         blank=True,
         null=True,
-        upload_to='',
-        validators=[
-            ImageSizeValidator(MAX_QUESTION_IMAGE_SIZE),
-        ],
+        validators=[ImageSizeValidator(5)]
     )
 
     is_answered = models.BooleanField(

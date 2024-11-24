@@ -28,7 +28,17 @@
             {% if request.user.is_authenticated %}
                 <li class="nav-item">
                     <a class="nav-link" href="{% url 'profile-details' request.user.pk %}">
-                        <i class="nav-icon bi bi-person-circle"></i> {{ user.username }}
+                        {% if request.user.profile.profile_picture.url %}
+                            <!-- Profile picture -->
+                            <img src="{{ request.user.profile.profile_picture.url }}" 
+                                 alt="Profile Picture" 
+                                 class="rounded-circle" 
+                                 style="width: 30px; height: 30px; object-fit: cover;">
+                        {% else %}
+                            <!-- Default icon if no profile picture -->
+                            <i class="nav-icon bi bi-person-circle"></i>
+                        {% endif %}
+                        {{ user.username }}
                     </a>
                 </li>
                 <!-- Logout Button -->
