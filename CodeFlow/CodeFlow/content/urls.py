@@ -1,6 +1,7 @@
 from django.urls import path, include
 from CodeFlow.content.views import QuestionListView, QuestionDetailView, QuestionCreateView, QuestionEditView, QuestionDeleteView
 from CodeFlow.content.views import LectureListView, LectureCreateView, LectureEditView, LectureDeleteView, LectureDetailView
+from CodeFlow.content.views import SectionCreateView, SectionEditView, SectionDeleteView, SectionDetailView
 urlpatterns = [
     path('questions/', include([
         path('', QuestionListView.as_view(), name='questions'),
@@ -16,5 +17,10 @@ urlpatterns = [
         path('<slug:slug>/', LectureDetailView.as_view(), name='lecture-details'),
         path('<slug:slug>/edit/', LectureEditView.as_view(), name='lecture-edit'),
         path('<slug:slug>/delete/', LectureDeleteView.as_view(), name='lecture-delete'),
+        path('<slug:slug>/create/', SectionCreateView.as_view(), name='section-create'),
+        path('<slug:slug>/<int:pk>/', SectionDetailView.as_view(), name='section-details'),
+        path('<slug:slug>/<int:pk>/edit/', SectionEditView.as_view(), name='section-edit'),
+        path('<slug:slug>/<int:pk>/delete/', SectionDeleteView.as_view(), name='section-delete'),
+
     ])),
 ]

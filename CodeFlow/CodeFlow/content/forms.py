@@ -1,5 +1,5 @@
 from django import forms
-from CodeFlow.content.models import Question, Lecture
+from CodeFlow.content.models import Question, Lecture, Section
 
 
 class QuestionBaseForm(forms.ModelForm):
@@ -48,14 +48,14 @@ class LectureBaseForm(forms.ModelForm):
         widgets = {
             'title': forms.TextInput(attrs={'placeholder': 'Title of lecture'}),
             'text': forms.Textarea(attrs={
-                'placeholder': 'Your learning material...',
+                'placeholder': 'Describe your lecture...',
                 'rows': 5
             }),
         }
 
         labels = {
             'title': 'Lecture title',
-            'text': 'Learning material',
+            'text': 'Description of lecture',
         }
 
 
@@ -74,3 +74,29 @@ class LectureDeleteForm(LectureBaseForm):
         for field in self.fields.values():
             field.widget.attrs['disabled'] = True
             field.widget.attrs['readonly'] = True
+
+
+class SectionBaseForm(forms.ModelForm):
+    class Meta:
+        model = Section
+        fields = ['section_name', 'text']
+        widgets = {
+            'section_name': forms.TextInput(attrs={'placeholder': 'Title of section'}),
+            'text': forms.Textarea(attrs={
+                'placeholder': 'Content of section...',
+                'rows': 5
+            }),
+        }
+
+        labels = {
+            'section_name': 'Section title',
+            'text': 'Section content',
+        }
+
+class SectionCreateForm(SectionBaseForm):
+    pass
+
+
+class SectionEditForm(SectionBaseForm):
+    pass
+

@@ -3,16 +3,46 @@
 {% block content %}
 <!-- Lecture Title and Information -->
 <div class="container my-4">
-    <h1>{{ lecture.title }}</h1>
+    <!-- Centered Lecture Title -->
+    <h1 class="text-center">{{ lecture.title }}</h1>
+
     <!-- Styled Lecture Text -->
     <div class="form-group">
-        <label for="lectureText" class="h5">Lecture Content</label>
+        <label for="lectureText" class="h5">Lecture Content:</label>
         <div class="card p-4">
-
-                <p>{{ lecture.text }}</p> <!-- You can style this further -->
-
+            <p>{{ lecture.text }}</p> <!-- You can style this further -->
         </div>
     </div>
+</div>
+
+<!-- Centered "Sections" Heading -->
+<div class="container my-4 text-center">
+    <h2>Sections</h2>
+</div>
+
+<div class="container mb-4"> <!-- Add spacing between sections and buttons -->
+    {% if lecture.sections.exists %}
+        <ul class="list-group">
+            {% for section in lecture.sections.all %}
+                <li class="list-group-item d-flex justify-content-between align-items-center">
+                    <!-- Hyperlink to section details -->
+                    <a href="{% url 'section-details' lecture.slug section.pk %}">
+                        {{ section.section_name }}
+                    </a>
+                </li>
+            {% endfor %}
+        </ul>
+    {% else %}
+        <p class="text-center">No sections have been added yet.</p>
+    {% endif %}
+
+    {% if user.is_authenticated and user == lecture.author %}
+        <div class="text-center mt-4">
+            <a href="{% url 'section-create' lecture.slug %}" class="btn btn-primary mb-4">
+                Add New Section
+            </a>
+        </div>
+    {% endif %}
 </div>
 
 <!-- Like, Edit, and Delete Buttons (aligned) -->

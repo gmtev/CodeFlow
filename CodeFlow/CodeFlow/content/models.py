@@ -82,3 +82,24 @@ class Lecture(BaseContent):
         ordering = ['author']
 
 
+class Section(models.Model):
+    MIN_SECTION_NAME_SIZE = 5
+    MAX_SECTION_NAME_SIZE = 70
+
+    section_name = models.CharField(
+        max_length=MAX_SECTION_NAME_SIZE,
+        validators=[
+            MinLengthValidator(MIN_SECTION_NAME_SIZE),
+            TitleValidator(),
+        ],
+    )
+    text = models.TextField()
+
+    lecture = models.ForeignKey(
+        to=Lecture,
+        on_delete=models.CASCADE,
+        related_name="sections",
+    )
+
+    def __str__(self):
+        return f"Point: {self.section_name} for Lecture: {self.lecture.title}"

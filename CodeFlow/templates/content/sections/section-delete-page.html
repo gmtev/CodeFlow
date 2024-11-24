@@ -1,0 +1,30 @@
+{% extends "common/base.html" %}
+
+{% block content %}
+<div class="container my-5">
+
+    <h1 class="text-center mb-4">Delete Section</h1>
+
+    <div class="card p-4 shadow-sm">
+        <p class="lead text-center">
+            Are you sure you want to delete the section titled "<strong>{{ object.section_name }}</strong>"?
+        </p>
+
+        <div class="text-center mt-4">
+            <form method="post">
+                {% csrf_token %}
+                <button type="submit" class="btn btn-danger btn-lg">
+                    <i class="bi bi-trash"></i> Delete
+                </button>
+            </form>
+        </div>
+
+
+        <div class="text-center mt-3">
+            <a href="{% url 'lecture-details' object.lecture.slug %}" class="btn btn-secondary btn-lg">
+                <i class="bi bi-arrow-left"></i> Cancel
+            </a>
+        </div>
+    </div>
+</div>
+{% endblock %}

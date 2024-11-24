@@ -1,15 +1,16 @@
 from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
 from django.contrib.contenttypes.models import ContentType
+from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
-
 from CodeFlow.commons.models import Comment, Like
 from CodeFlow.content.forms import QuestionEditForm, QuestionCreateForm, QuestionDeleteForm
 from CodeFlow.content.forms import LectureCreateForm, LectureDeleteForm, LectureEditForm
+from CodeFlow.content.forms import SectionCreateForm, SectionEditForm
 from CodeFlow.commons.forms import CommentForm
-from CodeFlow.content.models import Question, Lecture
-
+from CodeFlow.content.models import Question, Lecture, Section
+from CodeFlow.content.mixins import SectionAuthorMixin
 
 class QuestionListView(ListView):
     model = Question
@@ -106,10 +107,12 @@ class LectureDetailView(LoginRequiredMixin, DetailView):
     def get_context_data(self, **kwargs):
         context = super().get_context_data(**kwargs)
         lecture = self.object
+        sections = lecture.sections.all()
         lecture_content_type = ContentType.objects.get_for_model(Lecture)
         likes = Like.objects.filter(content_type=lecture_content_type, object_id=lecture.id)
         comments = Comment.objects.filter(content_type=lecture_content_type, object_id=lecture.id)
         user_has_liked = likes.filter(user=self.request.user).exists() if self.request.user.is_authenticated else False
+        context['sections'] = sections
         context['likes'] = likes
         context['comments'] = comments
         context['user_has_liked'] = user_has_liked
@@ -169,3 +172,64 @@ class LectureDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         })
 
         return kwargs
+
+
+class SectionCreateView(LoginRequiredMixin, CreateView):
+    model = Section
+    form_class = SectionCreateForm
+    template_name = "content/sections/section-create-page.html"
+
+    def form_valid(self, form):
+        lecture = get_object_or_404(Lecture, slug=self.kwargs['slug'])
+        form.instance.lecture = lecture
+
+        return super().form_valid(form)
+
+    def dispatch(self, request, *args, **kwargs):
+        lecture = get_object_or_404(Lecture, slug=self.kwargs['slug'])
+        if lecture.author != request.user:
+            raise PermissionDenied
+        self.lecture = lecture
+
+        return super().dispatch(request, *args, **kwargs)
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['lecture'] = self.lecture
+
+        return context
+
+    def get_success_url(self):
+        return reverse_lazy("lecture-details", kwargs={"slug": self.kwargs['slug']})
+
+
+
+class SectionEditView(LoginRequiredMixin, SectionAuthorMixin, UpdateView):
+    model = Section
+    form_class = SectionEditForm
+    template_name = "content/sections/section-edit-page.html"
+
+    def get_success_url(self):
+        lecture = self.object.lecture
+        return reverse_lazy("lecture-details", kwargs={"slug": lecture.slug})
+
+
+class SectionDeleteView(LoginRequiredMixin, SectionAuthorMixin, DeleteView):
+    model = Section
+    template_name = "content/sections/section-delete-page.html"
+
+    def get_context_data(self, **kwargs):
+        context = super().get_context_data(**kwargs)
+        context['section'] = self.object
+        return context
+
+    def get_success_url(self):
+        lecture = self.object.lecture
+        return reverse_lazy("lecture-details", kwargs={"slug": lecture.slug})
+
+
+class SectionDetailView(LoginRequiredMixin, DetailView):
+    model = Section
+    template_name = "content/sections/section-details-page.html"
+    context_object_name = "section"
+
