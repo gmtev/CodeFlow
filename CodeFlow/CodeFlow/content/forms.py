@@ -5,10 +5,10 @@ from CodeFlow.content.models import Question, Lecture
 class QuestionBaseForm(forms.ModelForm):
     class Meta:
         model = Question
-        fields = ['question_title', 'text', 'picture']
+        fields = ['title', 'text', 'picture']
 
         widgets = {
-            'question_title': forms.TextInput(attrs={'placeholder': 'Question title'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Question title'}),
             'text': forms.Textarea(attrs={
                 'placeholder': 'Describe your question...',
                 'rows': 5
@@ -17,7 +17,7 @@ class QuestionBaseForm(forms.ModelForm):
 
 
         labels = {
-            'question_title': 'Question title',
+            'title': 'Question title',
             'text': 'Question description',
         }
 
@@ -29,7 +29,7 @@ class QuestionCreateForm(QuestionBaseForm):
 class QuestionEditForm(QuestionBaseForm):
     class Meta(QuestionBaseForm.Meta):
         model = Question
-        fields = ['question_title', 'text', 'picture', 'is_answered']
+        fields = ['title', 'text', 'picture', 'is_answered']
 
 class QuestionDeleteForm(QuestionBaseForm):
     def __init__(self, *args, **kwargs):
@@ -43,10 +43,10 @@ class QuestionDeleteForm(QuestionBaseForm):
 class LectureBaseForm(forms.ModelForm):
     class Meta:
         model = Lecture
-        fields = ['lecture_title', 'text']
+        fields = ['title', 'text']
 
         widgets = {
-            'lecture_title': forms.TextInput(attrs={'placeholder': 'Title of lecture'}),
+            'title': forms.TextInput(attrs={'placeholder': 'Title of lecture'}),
             'text': forms.Textarea(attrs={
                 'placeholder': 'Your learning material...',
                 'rows': 5
@@ -54,7 +54,7 @@ class LectureBaseForm(forms.ModelForm):
         }
 
         labels = {
-            'lecture_title': 'Lecture title',
+            'title': 'Lecture title',
             'text': 'Learning material',
         }
 

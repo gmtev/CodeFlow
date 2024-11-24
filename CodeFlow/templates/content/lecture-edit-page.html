@@ -12,8 +12,8 @@
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
                 <div class="mb-3">
-                    <label for="{{ form.lecture_title.id_for_label }}" class="form-label">Title</label>
-                    {{ form.lecture_title|add_class:"form-control" }}
+                    <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+                    {{ form.title|add_class:"form-control" }}
                 </div>
                 <div class="mb-3">
                     <label for="{{ form.text.id_for_label }}" class="form-label">Content</label>

@@ -1,6 +1,7 @@
+
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
-
+from re import match
 
 @deconstructible
 class ImageSizeValidator:
@@ -58,14 +59,13 @@ class UsernameValidator:
     def message(self, value):
         if value is None:
             self.__message = ('Username must contain only letters, digits, and the following characters:'
-                              '(_, -, ., @)!')
+                              '(_ - . @)!')
         else:
             self.__message = value
 
     def __call__(self, value, *args, **kwargs):
-        for ch in value:
-            if not ch.isalnum() and ch not in ['_', '-', '.', '@']:
-                raise ValidationError(self.message)
+        if not match(r'^[A-Za-z0-9_.\-@]+$', value):
+            raise ValidationError(self.message)
 
 
 @deconstructible
@@ -80,10 +80,10 @@ class TitleValidator:
     @message.setter
     def message(self, value):
         if value is None:
-            self.__message = "The title must contain letters only!"
+            self.__message = "The title must contain letters, digits, spaces, and the following characters:!@#$%^&*()_\-+=:;,.?"
         else:
             self.__message = value
 
     def __call__(self, value, *args, **kwargs):
-        if not value.isalpha():
+        if not match(r'^[A-Za-z0-9\s!@#$%^&*()_\-+=:;,.?]+$', value):
             raise ValidationError(self.message)
