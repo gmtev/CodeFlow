@@ -1,0 +1,16 @@
+<!-- 404.html -->
+{% extends 'common/base.html' %}
+{% load static %}
+{% block content %}
+<div class="container my-5">
+    <h1 class="text-center">404 Not Found</h1>
+    <p class="text-center">The page you're looking for could not be found.</p>
+    <p class="text-center">
+    <img src="{% static 'images/error_image.png' %}" alt="dashboard_image" class="img-fluid mb-4" style="max-width: 300px;">
+    </p>
+    <div class="text-center">
+        <a href="{% url 'home' %}" class="btn btn-primary">Go Home</a>
+    </div>
+</div>
+{% endblock %}
+

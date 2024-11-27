@@ -1,0 +1,43 @@
+{% extends 'common/base.html' %}
+{% load custom_filters %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="card shadow" style="width: 500px; padding: 20px; min-height: 400px;">
+
+        <div class="card-header text-white text-center" style="background-color: #ff6600;">
+            <h1>Ask a Question</h1>
+        </div>
+
+        <div class="card-body p-4">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+                    {{ form.title|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.text.id_for_label }}" class="form-label">Description</label>
+                    {{ form.text|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.picture.id_for_label }}" class="form-label">Picture</label>
+                    {{ form.picture|add_class:"form-control" }}
+                    {% if form.picture.errors %}
+                    <div class="error">
+                        {% for error in form.picture.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                    {% endif %}
+                </div>
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn btn-primary" style="width: 48%;">Save</button>
+                    <a href="{% url 'questions' %}" class="btn btn-secondary" style="width: 48%;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}
+
+

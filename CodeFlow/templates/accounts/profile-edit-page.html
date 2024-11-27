@@ -11,18 +11,40 @@
         <div class="row">
             <!-- Profile Picture Section -->
             <div class="col-md-4 text-center">
-                <div class="mb-4">
-                    <h5>Profile Picture</h5>
-                    {% if profile.profile_picture %}
-                        <img src="{{ profile.profile_picture.url }}" alt="Profile Picture" class="img-fluid rounded-circle mb-3" style="max-width: 200px;">
-                    {% else %}
-                        <img src="{% static 'images/default-profile-pic.jpg' %}" alt="Default Profile Picture" class="img-fluid rounded-circle mb-3" style="max-width: 200px;">
-                    {% endif %}
-                </div>
+<div class="mb-4">
+    <h5>Profile Picture</h5>
+    <!-- Profile Picture Preview -->
+    {% if profile.profile_picture %}
+        <img id="profile-picture-preview" 
+             src="{{ profile.profile_picture.url }}" 
+             alt="Profile Picture" 
+             class="img-fluid rounded-circle mb-3" 
+             style="max-width: 200px;">
+    {% else %}
+        <img id="profile-picture-preview" 
+             src="{% static 'images/default-profile-pic.jpg' %}" 
+             alt="Default Profile Picture" 
+             class="img-fluid rounded-circle mb-3" 
+             style="max-width: 200px;">
+    {% endif %}
+</div>
+
+        
+                
+                <!-- Error Display -->
+                {% if form.profile_picture.errors %}
+                    <div class="error">
+                        {% for error in form.profile_picture.errors %}
+                            <p>{{ error }}</p>
+                        {% endfor %}
+                    </div>
+                {% endif %}
+
+                <!-- File Input for Profile Picture -->
                 <div class="form-group">
                     <label for="profile_picture" class="btn btn-secondary btn-block">
                         Change Profile Picture
-                        <input type="file" name="profile_picture" id="profile_picture" class="form-control-file d-none">
+                        <input type="file" name="profile_picture" id="profile_picture" class="form-control-file d-none" onchange="previewImage(event)">
                     </label>
                 </div>
             </div>
@@ -43,7 +65,6 @@
                             <input type="text" name="last_name" id="last_name" class="form-control" value="{{ profile.last_name }}" placeholder="Enter your last name">
                         </div>
                         
-                        
                         <button type="submit" class="btn btn-outline-primary btn-block mt-3">Save Changes</button>
                     </div>
                 </div>
@@ -57,4 +78,28 @@
     </div>
 </div>
 
+<!-- JavaScript for Real-Time Image Preview -->
+<script>
+    function previewImage(event) {
+        // Get the selected file
+        const input = event.target;
+        const file = input.files[0];
+        
+        // Ensure a file is selected and is an image
+        if (file && file.type.startsWith('image/')) {
+            const reader = new FileReader();
+
+            // Once the file is read, update the image src
+            reader.onload = function(e) {
+                const preview = document.getElementById('profile-picture-preview');
+                preview.src = e.target.result;
+            };
+
+            // Read the image file as a data URL
+            reader.readAsDataURL(file);
+        }
+    }
+</script>
+
 {% endblock %}
+

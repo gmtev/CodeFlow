@@ -15,14 +15,14 @@ from CodeFlow.content.mixins import SectionAuthorMixin
 
 class QuestionListView(ListView):
     model = Question
-    template_name = 'content/questions.html'
+    template_name = 'content/questions/questions.html'
     context_object_name = 'questions'
     paginate_by = 3
 
 
 class QuestionDetailView(DetailView):
     model = Question
-    template_name = 'content/question-details-page.html'
+    template_name = 'content/questions/question-details-page.html'
     context_object_name = 'question'
     slug_url_kwarg = 'slug'
 
@@ -53,7 +53,7 @@ class QuestionDetailView(DetailView):
 class QuestionCreateView(LoginRequiredMixin, CreateView):
     model = Question
     form_class = QuestionCreateForm
-    template_name = 'content/question-create-page.html'
+    template_name = 'content/questions/question-create-page.html'
     success_url = reverse_lazy('questions')
 
     def form_valid(self, form):
@@ -62,7 +62,7 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
 
 class QuestionEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Question
-    template_name = 'content/question-edit-page.html'
+    template_name = 'content/questions/question-edit-page.html'
     form_class = QuestionEditForm
     slug_url_kwarg = 'slug'
 
@@ -81,7 +81,7 @@ class QuestionEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class QuestionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Question
-    template_name = 'content/question-delete-page.html'
+    template_name = 'content/questions/question-delete-page.html'
     slug_url_kwarg = 'slug'
     form_class = QuestionDeleteForm
 
@@ -107,13 +107,13 @@ class QuestionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
 
 class LectureListView(ListView):
     model = Lecture
-    template_name = 'content/lectures.html'
+    template_name = 'content/lectures/lectures.html'
     context_object_name = 'lectures'
     paginate_by = 4
 
 class LectureDetailView(LoginRequiredMixin, DetailView):
     model = Lecture
-    template_name = 'content/lecture-details-page.html'
+    template_name = 'content/lectures/lecture-details-page.html'
     slug_url_kwarg = 'slug'
 
     def get_context_data(self, **kwargs):
@@ -134,7 +134,7 @@ class LectureDetailView(LoginRequiredMixin, DetailView):
 class LectureCreateView(LoginRequiredMixin, CreateView):
     model = Lecture
     form_class = LectureCreateForm
-    template_name = 'content/lecture-create-page.html'
+    template_name = 'content/lectures/lecture-create-page.html'
     success_url = reverse_lazy('lectures')
 
     def form_valid(self, form):
@@ -143,7 +143,7 @@ class LectureCreateView(LoginRequiredMixin, CreateView):
 
 class LectureEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
     model = Lecture
-    template_name = 'content/lecture-edit-page.html'
+    template_name = 'content/lectures/lecture-edit-page.html'
     form_class = LectureEditForm
     slug_url_kwarg = 'slug'
 
@@ -161,7 +161,7 @@ class LectureEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
 
 class LectureDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = Lecture
-    template_name = 'content/lecture-delete-page.html'
+    template_name = 'content/lectures/lecture-delete-page.html'
     slug_url_kwarg = 'slug'
     form_class = LectureDeleteForm
 

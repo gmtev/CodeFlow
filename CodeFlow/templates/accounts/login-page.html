@@ -17,9 +17,16 @@
                 
                 <!-- Submit Button -->
                 <div class="d-flex justify-content-center mt-4">
-                    <button type="submit" class="btn btn-primary">Login</button>
+                    <button type="submit" class="btn btn-primary w-100">Login</button>
                 </div>
             </form>
+            <!-- Login Prompt -->
+                <div class="text-center mt-3">
+                    <p class="small text-muted">
+                        Don't have an account? 
+                        <a href="{% url 'login' %}" class="text-decoration-none" style="color: #ff4500;">Register</a>
+                    </p>
+                </div>
         </div>
     </div>
 </div>

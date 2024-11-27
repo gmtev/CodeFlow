@@ -29,6 +29,7 @@ class CustomUserRegisterView(CreateView):
         return response
 
 
+
 class ProfileDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
     model = UserModel
     template_name = 'accounts/profile-delete-page.html'

@@ -1,0 +1,30 @@
+{% extends 'common/base.html' %}
+{% load custom_filters %}
+{% block content %}
+<div class="container d-flex justify-content-center align-items-center">
+    <div class="card shadow" style="width: 500px; padding: 15px; min-height: 400px;">
+
+        <div class="card-header text-white text-center" style="background-color: #ff6600;">
+            <h1>Delete Lecture</h1>
+        </div>
+        <p class="text-center">Are you sure you want to delete the lecture "{{ object.title }}"?</p>
+        <div class="card-body p-4">
+            <form method="post" enctype="multipart/form-data">
+                {% csrf_token %}
+                <div class="mb-3">
+                    <label for="{{ form.title.id_for_label }}" class="form-label">Title</label>
+                    {{ form.title|add_class:"form-control" }}
+                </div>
+                <div class="mb-3">
+                    <label for="{{ form.text.id_for_label }}" class="form-label">Content</label>
+                    {{ form.text|add_class:"form-control" }}
+                </div>
+                <div class="d-flex justify-content-between mt-4">
+                    <button type="submit" class="btn btn-danger" style="width: 48%;">Delete</button>
+                    <a href="{% url 'lecture-details' lecture.slug %}" class="btn btn-secondary" style="width: 48%;">Cancel</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

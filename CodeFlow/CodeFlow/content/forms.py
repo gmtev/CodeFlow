@@ -1,6 +1,7 @@
 from django import forms
 from CodeFlow.content.models import Question, Lecture, Section
-
+from django.core.files.uploadedfile import UploadedFile
+from django.core.exceptions import ValidationError
 
 class QuestionBaseForm(forms.ModelForm):
     class Meta:
@@ -20,6 +21,16 @@ class QuestionBaseForm(forms.ModelForm):
             'title': 'Question title',
             'text': 'Question description',
         }
+
+    def clean_picture(self):
+        file = self.cleaned_data.get('picture')
+
+        if file:
+            if isinstance(file, UploadedFile):
+                if file.size > 5 * 1024 * 1024:
+                    raise ValidationError("File shouldn't be larger than 5MB.")
+
+        return file
 
 
 class QuestionCreateForm(QuestionBaseForm):

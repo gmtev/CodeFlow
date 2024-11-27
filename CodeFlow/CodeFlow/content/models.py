@@ -15,6 +15,7 @@ class BaseContent(models.Model):
 
     MIN_TITLE_SIZE = 5
     MAX_TITLE_SIZE = 100
+
     title = models.CharField(
         max_length=MAX_TITLE_SIZE,
         validators=[
@@ -51,6 +52,7 @@ class BaseContent(models.Model):
 
 
 class Question(BaseContent):
+    MAX_IMAGE_SIZE = 5
 
     class Meta(BaseContent.Meta):
         indexes = [
@@ -62,7 +64,7 @@ class Question(BaseContent):
         'image',
         blank=True,
         null=True,
-        validators=[ImageSizeValidator(5)]
+        validators=[ImageSizeValidator(MAX_IMAGE_SIZE)],
     )
 
     is_answered = models.BooleanField(

@@ -1,13 +1,12 @@
 {% extends "common/base.html" %}
-
+{% load static %}
 {% block content %}
 <div class="text-center mt-5">
-    
-{#    <img src="{% static 'images/thematic_image.jpg' %}" alt="Thematic" class="img-fluid mb-4" style="max-width: 500px;">#}
+
 
     <h1>Welcome to CodeFlow!</h1>
     <p class="lead mb-4">Your platform for collaborative learning and coding discussions.</p>
-
+    <img src="{% static 'images/programming-clipart.png' %}" alt="dashboard_image" class="img-fluid mb-4" style="max-width: 500px;">
     {% if is_authenticated %}
 
         <div class="d-grid gap-2 d-sm-flex justify-content-center">

@@ -1,7 +1,8 @@
-
+from django.core.files.uploadedfile import UploadedFile
 from django.core.exceptions import ValidationError
 from django.utils.deconstruct import deconstructible
 from re import match
+
 
 @deconstructible
 class ImageSizeValidator:
@@ -21,8 +22,9 @@ class ImageSizeValidator:
             self.__message = value
 
     def __call__(self, value):
-        if value.size > self.file_size_mb * 1024 * 1024:
-            raise ValidationError(self.message)
+        if isinstance(value, UploadedFile):
+            if value.size > self.file_size_mb * 1024 * 1024:
+                raise ValidationError(self.message)
 
 
 @deconstructible
