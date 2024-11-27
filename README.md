@@ -14,7 +14,7 @@ The following external API keys and secret keys are required to run this project
 - **MAILJET_SECRET_KEY**: Mailjet Secret Key.  
 - **cloudinary_cloud_name/cloud_name**: Your Cloudinary Cloud Name.
 - **MEDIA_URL = "https://res.cloudinary.com/cloud_name_goes_here/" must contain the aforementioned cloud_name!** 
-- **В MEDIA_URL = "https://res.cloudinary.com/cloud_name_goes_here/" трябва да бъде поставена гореспоменатата cloud_name променливата.**
+- **В MEDIA_URL = "https://res.cloudinary.com/cloud_name_goes_here/" трябва да бъде поставена гореспоменатата cloud_name променлива.**
 - **cloudinary_api_key**: Cloudinary API Key.  
 - **cloudinary_api_secret**: Cloudinary API Secret Key.  
 
