@@ -1,13 +1,11 @@
-
 from django.views.generic import TemplateView
-from CodeFlow.commons.forms import CommentForm
-from CodeFlow.commons.models import Like
 from django.contrib.contenttypes.models import ContentType
-from django.shortcuts import get_object_or_404, redirect
-from django.contrib.auth.decorators import login_required
-
-
-
+from CodeFlow.commons.models import Comment, Like
+from CodeFlow.commons.serializers import CommentSerializer, LikeSerializer
+from rest_framework.pagination import PageNumberPagination
+from rest_framework import generics, status
+from rest_framework.response import Response
+from rest_framework.permissions import IsAuthenticated
 class HomePageView(TemplateView):
     template_name = "common/home-page.html"
 
@@ -17,40 +15,52 @@ class HomePageView(TemplateView):
         return context
 
 
-@login_required
-def likes_functionality(request, model_name: str, object_id: int):
-    content_type = get_object_or_404(ContentType, model=model_name.lower())
+class CommentPagination(PageNumberPagination):
+    page_size = 5
+    page_size_query_param = 'page_size'
+    max_page_size = 20
 
-    liked_object = Like.objects.filter(
-        content_type=content_type,
-        object_id=object_id,
-        user=request.user
-    ).first()
+class CommentListCreateView(generics.ListCreateAPIView):
+    serializer_class = CommentSerializer
+    permission_classes = [IsAuthenticated]
+    pagination_class = CommentPagination
 
-    if liked_object:
-        liked_object.delete()
-    else:
-        Like.objects.create(
+    def get_queryset(self):
+        content_type = ContentType.objects.get(model=self.kwargs['model_name'].lower())
+        return Comment.objects.filter(content_type=content_type, object_id=self.kwargs['object_id'])
+
+    def perform_create(self, serializer):
+        content_type = ContentType.objects.get(model=self.kwargs['model_name'].lower())
+        serializer.save(
+            author=self.request.user,
             content_type=content_type,
-            object_id=object_id,
-            user=request.user
+            object_id=self.kwargs['object_id']
         )
 
-    return redirect(request.META.get('HTTP_REFERER') + f'#{object_id}')
+class LikeToggleView(generics.GenericAPIView):
+    serializer_class = LikeSerializer
+    permission_classes = [IsAuthenticated]
+
+    def post(self, request, model_name, object_id):
+        content_type = ContentType.objects.get(model=model_name.lower())
+
+        existing_like = Like.objects.filter(
+            content_type=content_type, object_id=object_id, user=request.user
+        ).first()
+
+        if existing_like:
+            existing_like.delete()
+            liked = False
+        else:
+            Like.objects.create(content_type=content_type, object_id=object_id, user=request.user)
+            liked = True
+
+        like_count = Like.objects.filter(
+            content_type=content_type, object_id=object_id
+        ).count()
+
+        return Response({'liked': liked, 'like_count': like_count}, status=status.HTTP_200_OK)
 
 
-@login_required
-def comment_functionality(request, model_name: str, object_id: int):
-    content_type = get_object_or_404(ContentType, model=model_name.lower())
 
-    if request.method == 'POST':
-        comment_form = CommentForm(request.POST)
 
-        if comment_form.is_valid():
-            comment = comment_form.save(commit=False)
-            comment.content_type = content_type
-            comment.object_id = object_id
-            comment.author = request.user
-            comment.save()
-
-    return redirect(request.META.get('HTTP_REFERER') + f'#{object_id}')

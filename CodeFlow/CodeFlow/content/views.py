@@ -4,6 +4,7 @@ from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
+from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
 from CodeFlow.commons.models import Comment, Like
 from CodeFlow.content.forms import QuestionEditForm, QuestionCreateForm, QuestionDeleteForm
 from CodeFlow.content.forms import LectureCreateForm, LectureDeleteForm, LectureEditForm
@@ -30,8 +31,19 @@ class QuestionDetailView(DetailView):
         question = self.object
         question_content_type = ContentType.objects.get_for_model(Question)
         likes = Like.objects.filter(content_type=question_content_type, object_id=question.id)
-        comments = Comment.objects.filter(content_type=question_content_type, object_id=question.id)
+        all_comments = Comment.objects.filter(content_type=question_content_type, object_id=question.id)
+
+        paginator = Paginator(all_comments, 5)
+        page = self.request.GET.get('page')
+        try:
+            comments = paginator.page(page)
+        except PageNotAnInteger:
+            comments = paginator.page(1)
+        except EmptyPage:
+            comments = paginator.page(paginator.num_pages)
         user_has_liked = likes.filter(user=self.request.user).exists() if self.request.user.is_authenticated else False
+        context['is_paginated'] = comments.has_other_pages()
+        context['page_obj'] = comments
         context['likes'] = likes
         context['comments'] = comments
         context['user_has_liked'] = user_has_liked

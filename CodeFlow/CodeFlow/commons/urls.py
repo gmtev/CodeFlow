@@ -1,9 +1,9 @@
 from django.urls import path
-from CodeFlow.commons import views
+from CodeFlow.commons.views import CommentListCreateView, LikeToggleView, HomePageView
 
 
 urlpatterns = [
-    path('', views.HomePageView.as_view(), name='home'),
-    path('like/<str:model_name>/<int:object_id>/', views.likes_functionality, name='like'),
-    path('comment/<str:model_name>/<int:object_id>/', views.comment_functionality, name='comment')
+    path('', HomePageView.as_view(), name='home'),
+    path('api/comments/<str:model_name>/<int:object_id>/', CommentListCreateView.as_view(), name='api-comments'),
+    path('api/likes/<str:model_name>/<int:object_id>/', LikeToggleView.as_view(), name='api-likes'),
 ]

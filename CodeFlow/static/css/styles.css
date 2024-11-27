@@ -91,3 +91,33 @@
     background-position: 0 0;
 }
 
+/* Style for the question image */
+.question-image {
+    max-width: 100%;        /* Ensure the image doesn't overflow the container */
+    max-height: 400px;      /* Set a max height for the image */
+    width: auto;            /* Keep the aspect ratio */
+    height: auto;           /* Keep the aspect ratio */
+    object-fit: cover;      /* Makes sure the image fills the container and covers the area */
+    border-radius: 8px;     /* Optional: add rounded corners to the image */
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1); /* Optional: adds a soft shadow to make the image stand out */
+    margin-top: 15px;       /* Space above the image */
+}
+
+/* Optional: Add space for the card body when there is no image */
+.card-body {
+    padding-top: 20px;
+}
+
+/* For smaller devices like phones */
+@media (max-width: 768px) {
+    .question-image {
+        max-height: 250px;  /* Reduce image size on small screens */
+    }
+}
+
+/* For larger devices like tablets or desktops */
+@media (min-width: 769px) {
+    .question-image {
+        max-height: 400px;  /* Larger image size on bigger screens */
+    }
+}

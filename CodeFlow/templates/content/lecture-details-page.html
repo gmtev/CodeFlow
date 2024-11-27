@@ -1,117 +1,295 @@
 {% extends 'common/base.html' %}
 
 {% block content %}
-<!-- Lecture Title and Information -->
-<div class="container my-4">
-    <!-- Centered Lecture Title -->
-    <h1 class="text-center">{{ lecture.title }}</h1>
+<div class="container mt-5">
 
-    <!-- Styled Lecture Text -->
-    <div class="form-group">
-        <label for="lectureText" class="h5">Lecture Content:</label>
-        <div class="card p-4">
-            <p>{{ lecture.text }}</p> <!-- You can style this further -->
+    <!-- Lecture Title and Content -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body">
+            <h1 class="card-title">{{ lecture.title }}</h1>
+            <p class="card-text">{{ lecture.text }}</p>
+            <p><strong>Created by:</strong>
+                <a href="{% url 'profile-details' lecture.author.pk %}">{{ lecture.author.username }}</a>
+            </p>
+            <p><strong>Created at:</strong> {{ lecture.created_at }}</p>
         </div>
     </div>
-</div>
 
-<!-- Centered "Sections" Heading -->
-<div class="container my-4 text-center">
-    <h2>Sections</h2>
-</div>
+    <!-- Sections -->
+    <div class="container mb-4">
+        <h2>Sections</h2>
+        {% if lecture.sections.exists %}
+            <ul class="list-group">
+                {% for section in lecture.sections.all %}
+                    <li class="list-group-item">
+                        <a href="{% url 'section-details' lecture.slug section.pk %}">
+                            {{ section.section_name }}
+                        </a>
+                    </li>
+                {% endfor %}
+            </ul>
+        {% else %}
+            <p class="text-center">No sections have been added yet.</p>
+        {% endif %}
 
-<div class="container mb-4"> <!-- Add spacing between sections and buttons -->
-    {% if lecture.sections.exists %}
-        <ul class="list-group">
-            {% for section in lecture.sections.all %}
-                <li class="list-group-item d-flex justify-content-between align-items-center">
-                    <!-- Hyperlink to section details -->
-                    <a href="{% url 'section-details' lecture.slug section.pk %}">
-                        {{ section.section_name }}
-                    </a>
-                </li>
-            {% endfor %}
-        </ul>
-    {% else %}
-        <p class="text-center">No sections have been added yet.</p>
-    {% endif %}
+        {% if user.is_authenticated and user == lecture.author %}
+            <div class="text-center mt-4">
+                <a href="{% url 'section-create' lecture.slug %}" class="btn btn-primary">
+                    Add New Section
+                </a>
+            </div>
+        {% endif %}
+    </div>
 
-    {% if user.is_authenticated and user == lecture.author %}
-        <div class="text-center mt-4">
-            <a href="{% url 'section-create' lecture.slug %}" class="btn btn-primary mb-4">
-                Add New Section
-            </a>
-        </div>
-    {% endif %}
-</div>
-
-<!-- Like, Edit, and Delete Buttons (aligned) -->
-<div class="card shadow-sm mb-4">
-    <div class="card-body d-flex justify-content-between align-items-center">
-        <!-- Like Section -->
-        <div class="d-flex">
+    <!-- Like, Edit, and Delete Buttons -->
+    <div class="card shadow-sm mb-4">
+        <div class="card-body d-flex justify-content-between align-items-center">
             {% if user.is_authenticated %}
-                <form action="{% url 'like' 'lecture' lecture.id %}" method="post" class="d-inline">
-                    {% csrf_token %}
+                <button type="button" id="like-button" data-url="{% url 'api-likes' 'lecture' lecture.id %}" class="btn {% if user_has_liked %}btn-danger{% else %}btn-primary{% endif %}">
                     {% if user_has_liked %}
-                        <button type="submit" class="btn btn-danger btn-sm mr-2"><i class="bi bi-heart-fill"></i> Unlike</button>
+                        <i class="bi bi-heart-fill"></i> Unlike
                     {% else %}
-                        <button type="submit" class="btn btn-primary btn-sm mr-2"><i class="bi bi-heart"></i> Like</button>
+                        <i class="bi bi-heart"></i> Like
                     {% endif %}
-                </form>
+                </button>
             {% else %}
                 <p><a href="{% url 'login' %}">Log in</a> to like this lecture.</p>
             {% endif %}
-        </div>
-        
-        <!-- Edit and Delete Buttons -->
-        {% if request.user == lecture.author %}
-            <div class="d-flex">
-                <a href="{% url 'lecture-edit' lecture.slug %}" class="btn btn-warning btn-sm mr-2">
+
+            {% if request.user == lecture.author %}
+                <a href="{% url 'lecture-edit' lecture.slug %}" class="btn btn-warning btn-sm">
                     <i class="bi bi-pencil-square"></i> Edit
                 </a>
                 <a href="{% url 'lecture-delete' lecture.slug %}" class="btn btn-danger btn-sm">
                     <i class="bi bi-trash"></i> Delete
                 </a>
-            </div>
-        {% endif %}
+            {% endif %}
 
-        <!-- Likes Count -->
-        <div class="ml-3">
-            <p class="mb-0">{{ likes.count }} {{ likes.count|pluralize:"like,likes" }}</p>
+            <div class="ml-3">
+                <p class="mb-0">
+                    <span id="like-count">Total likes: {{ likes.count }}</span>
+                </p>
+            </div>
         </div>
     </div>
-</div>
 
-<!-- Back to Lectures Button -->
-<a href="{% url 'lectures' %}" class="btn btn-secondary">Back to Lectures</a>
+    <!-- Back to Lectures -->
+    <a href="{% url 'lectures' %}" class="btn btn-secondary mb-4">
+        <i class="bi bi-arrow-left-circle"></i> Back to Lectures
+    </a>
 
-<hr>
+    <hr>
 
-<!-- Comment Section -->
-<h2>Comments</h2>
-<div class="comments">
-    {% for comment in comments %}
-        <div class="comment">
-            <p><strong>{{ comment.author.username }}</strong> said:</p>
-            <p>{{ comment.content }}</p>
-            <p class="text-muted">{{ comment.created_at }}</p>
+    <!-- Comment Section -->
+    <h2>Comments</h2>
+    <div id="comments-section" class="comments">
+        <!-- Comments will be dynamically loaded -->
+    </div>
+
+    <!-- Pagination Section -->
+    <nav id="pagination-nav" aria-label="Comments Pagination">
+        <ul class="pagination">
+            <!-- Pagination links will be dynamically generated -->
+        </ul>
+    </nav>
+
+    <!-- Comment Form -->
+    {% if user.is_authenticated %}
+        <div class="form-group">
+            <textarea id="comment-textarea" rows="4" class="form-control" placeholder="Write a comment..." required></textarea>
+            <button id="post-comment-button" class="btn btn-primary mt-2" onclick="postComment('{{ lecture.id }}')">Post Comment</button>
         </div>
-        <hr>
-    {% empty %}
-        <p>No comments yet. Be the first to comment!</p>
-    {% endfor %}
+    {% else %}
+        <p><a href="{% url 'login' %}">Log in</a> to post a comment.</p>
+    {% endif %}
+
+    <!-- Loading Spinner -->
+    <div id="loading-spinner" class="text-center" style="display: none;">
+        <div class="spinner-border" role="status">
+            <span class="sr-only">Loading...</span>
+        </div>
+    </div>
+
 </div>
 
-<!-- Comment Form -->
-{% if user.is_authenticated %}
-    <form action="{% url 'comment' 'lecture' lecture.id %}" method="post">
-        {% csrf_token %}
-        <textarea name="content" id="content" rows="4" class="form-control" placeholder="Write a comment..." required></textarea>
-        <button type="submit" class="btn btn-primary mt-2">Post Comment</button>
-    </form>
-{% else %}
-    <p><a href="{% url 'login' %}">Log in</a> to post a comment.</p>
-{% endif %}
+<!-- JavaScript -->
+<script>
+    // Function to Load Comments with Pagination
+    async function loadComments(url) {
+        console.log("Loading comments from URL:", url);
 
+        const spinner = document.getElementById('loading-spinner');
+        spinner.style.display = 'block';
+
+        try {
+            if (!url.startsWith('http')) {
+                url = `${window.location.origin}${url}`;
+            }
+
+            const response = await fetch(url);
+            if (!response.ok) throw new Error(`Failed to load comments: ${response.statusText}`);
+
+            const data = await response.json();
+            console.log("Response data:", data);
+
+            const commentsSection = document.getElementById('comments-section');
+            commentsSection.innerHTML = '';
+            data.results.forEach(comment => {
+                const newComment = `
+                    <div class="comment mb-3">
+                        <div class="card shadow-sm">
+                            <div class="card-body">
+                                <p><a href="/profile/${comment.author_id}/"><strong>${comment.author_username}</strong></a> said:</p>
+                                <p>${comment.content}</p>
+                                <p class="text-muted">${new Date(comment.created_at).toLocaleString()}</p>
+                            </div>
+                        </div>
+                    </div>
+                `;
+                commentsSection.insertAdjacentHTML('beforeend', newComment);
+            });
+
+            const paginationNav = document.getElementById('pagination-nav');
+            const paginationList = paginationNav.querySelector('.pagination');
+            paginationList.innerHTML = '';
+
+            if (data.previous) {
+                const prevPageUrl = data.previous.startsWith('http') ? data.previous : `${window.location.origin}${data.previous}`;
+                paginationList.insertAdjacentHTML('beforeend', `
+                    <li class="page-item">
+                        <button class="page-link" onclick="loadComments('${prevPageUrl}')">&laquo; Previous</button>
+                    </li>
+                `);
+            }
+
+            const totalPages = Math.ceil(data.count / 5);
+            const currentPage = new URL(url).searchParams.get('page') || 1;
+
+            for (let i = 1; i <= totalPages; i++) {
+                paginationList.insertAdjacentHTML('beforeend', `
+                    <li class="page-item ${i == currentPage ? 'active' : ''}">
+                        <button class="page-link" onclick="loadComments('${url.replace(/page=\d+/, `page=${i}`)}')">${i}</button>
+                    </li>
+                `);
+            }
+
+            if (data.next) {
+                const nextPageUrl = data.next.startsWith('http') ? data.next : `${window.location.origin}${data.next}`;
+                paginationList.insertAdjacentHTML('beforeend', `
+                    <li class="page-item">
+                        <button class="page-link" onclick="loadComments('${nextPageUrl}')">Next &raquo;</button>
+                    </li>
+                `);
+            }
+        } catch (error) {
+            console.error("Error loading comments:", error.message, error.stack);
+            alert('Failed to load comments. Please try again.');
+        } finally {
+            spinner.style.display = 'none';
+        }
+    }
+
+    // Function to Post a Comment
+    async function postComment(objectId) {
+        const commentTextarea = document.getElementById('comment-textarea');
+        const commentContent = commentTextarea.value.trim();
+
+        if (!commentContent) {
+            alert("Comment cannot be empty!");
+            return;
+        }
+
+        try {
+            const response = await fetch(`/api/comments/lecture/${objectId}/`, {
+                method: 'POST',
+                headers: {
+                    'X-CSRFToken': getCookie('csrftoken'),
+                    'Content-Type': 'application/json',
+                },
+                body: JSON.stringify({ content: commentContent }),
+            });
+
+            if (!response.ok) throw new Error('Failed to post comment.');
+
+            commentTextarea.value = '';
+            loadComments(`/api/comments/lecture/${objectId}/?page=1`);
+        } catch (error) {
+            console.error('Error posting comment:', error);
+            alert('Failed to post comment.');
+        }
+    }
+
+    // Utility to Get CSRF Token
+    function getCookie(name) {
+        let cookieValue = null;
+        if (document.cookie && document.cookie !== '') {
+            const cookies = document.cookie.split(';');
+            for (let i = 0; i < cookies.length; i++) {
+                const cookie = cookies[i].trim();
+                if (cookie.startsWith(name + '=')) {
+                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                    break;
+                }
+            }
+        }
+        return cookieValue;
+    }
+
+    // Load the first page of comments on page load
+    document.addEventListener('DOMContentLoaded', () => {
+        const initialUrl = `/api/comments/lecture/{{ lecture.id }}/?page=1`;
+        loadComments(`${window.location.origin}${initialUrl}`);
+    });
+    
+
+document.getElementById('like-button').addEventListener('click', async function () {
+    const url = this.dataset.url;  // The URL for the like/unlike action
+    const likeCountSpan = document.getElementById('like-count');
+    const button = this;
+
+    try {
+        // Send the POST request to toggle the like
+        const response = await fetch(url, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': '{{ csrf_token }}',
+                'Content-Type': 'application/json',
+            },
+        });
+
+        // Ensure the response is okay
+        if (!response.ok) {
+            throw new Error('Failed to process the like action.');
+        }
+
+        // Parse the JSON response
+        const data = await response.json();
+
+        // Debugging: Log the response to the console
+        console.log("Response from backend:", data);
+
+        // Update the UI based on whether the object is liked or unliked
+        if (data.liked) {
+            button.classList.remove('btn-primary');
+            button.classList.add('btn-danger');
+            button.innerHTML = '<i class="bi bi-heart-fill"></i> Unlike';
+        } else {
+            button.classList.remove('btn-danger');
+            button.classList.add('btn-primary');
+            button.innerHTML = '<i class="bi bi-heart"></i> Like';
+        }
+
+        // Update the like count dynamically on the page, preserving the static text
+        likeCountSpan.textContent = 'Total likes: ' + data.like_count;
+
+    } catch (error) {
+        console.error('Error during the like process:', error);
+    }
+});
+
+</script>
 {% endblock %}
+
+
+
+
