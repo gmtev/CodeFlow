@@ -1,6 +1,7 @@
 ## Важно за проверяващите!/Important for reviewers!
-# В/към анкетата за моя проект има прикачен Google Docs файл, където са налични всички нужни данни за стартирането на проекта. Той ще бъде обновяван при всяко нужно ново вписване. Отделно в долната част на "README" ще бъде показана нужната информация. При наличие на проблеми, липса на данни в документа или несъответствие, можете да се свържете с мен по всяко време. Благодаря Ви предварително!
-# Attached to the survey form for my project is a Google Docs file that contains all the necessary data for starting the project. This document will be updated with every required new entry. Additionally, the necessary information will be displayed at the bottom of the "README" file. If you encounter any issues, missing data in the document, or discrepancies, you can contact me at any time. Thank you in advance!
+В/към анкетата за моя проект има прикачен Google Docs файл, където са налични всички нужни данни за стартирането на проекта. Той ще бъде обновяван при всяко нужно ново вписване. Отделно в долната част на "README" ще бъде показана нужната информация. При наличие на проблеми, липса на данни в документа или несъответствие, можете да се свържете с мен по всяко време. Благодаря Ви предварително!
+
+Attached to the survey form for my project is a Google Docs file that contains all the necessary data for starting the project. This document will be updated with every required new entry. Additionally, the necessary information will be displayed at the bottom of the "README" file. If you encounter any issues, missing data in the document, or discrepancies, you can contact me at any time. Thank you in advance!
 
 # SoftUni Django Advanced Course Project - CodeFlow
 In this repository, I will upload my project for **SoftUni's Django Advanced course**.
