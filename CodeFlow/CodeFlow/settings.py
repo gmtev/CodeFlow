@@ -11,7 +11,6 @@ https://docs.djangoproject.com/en/5.1/ref/settings/
 """
 
 from pathlib import Path
-
 from django.urls import reverse_lazy
 import cloudinary
 import cloudinary.uploader
@@ -78,7 +77,6 @@ TEMPLATES = [
 ]
 
 WSGI_APPLICATION = 'CodeFlow.wsgi.application'
-
 
 # Database
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
@@ -167,3 +165,4 @@ REST_FRAMEWORK = {
         'rest_framework.permissions.IsAuthenticated',
     ],
 }
+

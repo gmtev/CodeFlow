@@ -7,6 +7,7 @@ from django.urls import include
 urlpatterns = [
     path('admin/', admin.site.urls),
     path('', include('CodeFlow.commons.urls')),
+
     path('accounts/', include('CodeFlow.accounts.urls')),
     path('content/', include('CodeFlow.content.urls')),
 ]
