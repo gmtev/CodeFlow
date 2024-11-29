@@ -16,7 +16,8 @@ The following external API keys and secret keys are required to run this project
 - **MEDIA_URL = "https://res.cloudinary.com/cloud_name_goes_here/" must contain the aforementioned cloud_name!** 
 - **В MEDIA_URL = "https://res.cloudinary.com/cloud_name_goes_here/" трябва да бъде поставена гореспоменатата cloud_name променлива.**
 - **cloudinary_api_key**: Cloudinary API Key.  
-- **cloudinary_api_secret**: Cloudinary API Secret Key.  
+- **cloudinary_api_secret**: Cloudinary API Secret Key.
+- Database credentials in settings.py  
 
 
 
