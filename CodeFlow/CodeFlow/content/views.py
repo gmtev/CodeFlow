@@ -5,11 +5,11 @@ from django.shortcuts import get_object_or_404
 from django.urls import reverse_lazy
 from django.views.generic import ListView, DetailView, CreateView, UpdateView, DeleteView
 from django.core.paginator import Paginator, EmptyPage, PageNotAnInteger
-from CodeFlow.commons.models import Comment, Like
+from CodeFlow.common.models import Comment, Like
 from CodeFlow.content.forms import QuestionEditForm, QuestionCreateForm, QuestionDeleteForm
 from CodeFlow.content.forms import LectureCreateForm, LectureDeleteForm, LectureEditForm
 from CodeFlow.content.forms import SectionCreateForm, SectionEditForm
-from CodeFlow.commons.forms import CommentForm
+from CodeFlow.common.forms import CommentForm
 from CodeFlow.content.models import Question, Lecture, Section
 from CodeFlow.content.mixins import SectionAuthorMixin
 

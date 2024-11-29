@@ -4,7 +4,7 @@ from django.db import models
 from django.template.defaultfilters import slugify
 from django.core.validators import MinLengthValidator
 from CodeFlow.validators import ImageSizeValidator, TitleValidator
-
+from markdown import markdown
 UserModel = get_user_model()
 
 
@@ -39,6 +39,9 @@ class BaseContent(models.Model):
         to=UserModel,
         on_delete=models.CASCADE,
     )
+
+    def render_text_as_html(self):
+        return markdown(self.text)
 
 
     def save(self, *args, **kwargs):
@@ -100,6 +103,9 @@ class Section(models.Model):
         on_delete=models.CASCADE,
         related_name="sections",
     )
+
+    def render_text_as_html(self):
+        return markdown(self.text)
 
     def __str__(self):
         return f"Point: {self.section_name} for Lecture: {self.lecture.title}"

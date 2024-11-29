@@ -7,7 +7,7 @@
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h1 class="card-title">{{ question.title }}</h1>
-            <p class="card-text">{{ question.text }}</p>
+            <p class="card-text">{{ question.render_text_as_html|safe }}</p>
             <p><strong>Asked by:</strong>
                 <a href="{% url 'profile-details' question.author.pk %}">{{ question.author.username }}</a>
             </p>
@@ -126,7 +126,7 @@ async function loadComments(url) {
                 <div class="comment mb-3">
                     <div class="card shadow-sm">
                         <div class="card-body">
-                            <p><a href="/profile/${comment.author_id}/"><strong>${comment.author_username}</strong></a> said:</p>
+                            <p><a href="/accounts/profile/${comment.author_id}/"><strong>${comment.author_username}</strong></a> said:</p>
                             <p>${comment.content}</p>
                             <p class="text-muted">${new Date(comment.created_at).toLocaleString()}</p>
                         </div>

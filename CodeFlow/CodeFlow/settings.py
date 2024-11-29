@@ -41,10 +41,11 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'CodeFlow.accounts',
-    'CodeFlow.commons',
+    'CodeFlow.common',
     'CodeFlow.content',
     'rest_framework',
     'rest_framework.authtoken',
+    'markdown',
 ]
 
 MIDDLEWARE = [
@@ -82,14 +83,7 @@ WSGI_APPLICATION = 'CodeFlow.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    "default": {
-        "ENGINE": "django.db.backends.postgresql",
-        "NAME": "codeflow",
-        "USER": "postgres",
-        "PASSWORD": "postgres",
-        "HOST": "127.0.0.1",
-        "PORT": "5432",
-    }
+    'database_credentials'
 }
 
 

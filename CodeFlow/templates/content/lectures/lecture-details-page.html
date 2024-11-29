@@ -7,7 +7,7 @@
     <div class="card shadow-sm mb-4">
         <div class="card-body">
             <h1 class="card-title">{{ lecture.title }}</h1>
-            <p class="card-text">{{ lecture.text }}</p>
+            <p class="card-text">{{ lecture.render_text_as_html|safe }}</p>
             <p><strong>Created by:</strong>
                 <a href="{% url 'profile-details' lecture.author.pk %}">{{ lecture.author.username }}</a>
             </p>
@@ -139,7 +139,7 @@
                     <div class="comment mb-3">
                         <div class="card shadow-sm">
                             <div class="card-body">
-                                <p><a href="/profile/${comment.author_id}/"><strong>${comment.author_username}</strong></a> said:</p>
+                                <p><a href="/accounts/profile/${comment.author_id}/"><strong>${comment.author_username}</strong></a> said:</p>
                                 <p>${comment.content}</p>
                                 <p class="text-muted">${new Date(comment.created_at).toLocaleString()}</p>
                             </div>

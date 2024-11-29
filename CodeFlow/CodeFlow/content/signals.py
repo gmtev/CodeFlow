@@ -2,7 +2,7 @@ from django.db.models.signals import post_delete
 from django.dispatch import receiver
 from django.contrib.contenttypes.models import ContentType
 from CodeFlow.content.models import Question, Lecture
-from CodeFlow.commons.models import Comment, Like
+from CodeFlow.common.models import Comment, Like
 
 
 @receiver(post_delete, sender=Question)

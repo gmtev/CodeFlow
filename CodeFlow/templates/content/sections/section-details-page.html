@@ -7,7 +7,7 @@
     <hr class="my-4">
 
     <div class="card p-4 shadow-sm mb-4">
-        <p>{{ section.text }}</p>
+        <p>{{ section.render_text_as_html|safe }}</p>
     </div>
 
     <div class="mb-4">
