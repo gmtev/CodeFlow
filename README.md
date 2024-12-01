@@ -17,7 +17,8 @@ Project description:
 - Exception handling and data validations.
 - Extended the Django user (login with either username or email) and had him in a one-to-one with the Profile model.
 - RESTful Likes and Comments (like/unlike, add and remove comment).
-- Cloudinary used for image uploads.
+- Likes and Comments implemeted with generic foreign key in order to be more flexible for future development or changes in the project structure, as well as them being easy to be "taken out" of the project and be used elsewhere, otherwise they would be tied to the common parent model of Question and Lecture.
+- Cloudinary used for image uploads (5 mb validation limit).
 - Integrated Markdown for the Question/Lecture/Section textfield.
 - Asynchronous operations (sending a greeting upon registration and a goodbye email upon profile deletion using MAILJET).
 - Over 10 tests written.
@@ -67,6 +68,8 @@ The following external API keys and secret keys are required to run this project
 ![comment5](https://github.com/user-attachments/assets/6e1a37bc-5b39-47d0-a9d9-aec318ed5e3b)
 ![stana tuka](https://github.com/user-attachments/assets/c1a5b949-76fe-405c-be56-a3e855f1b0f4)
 ![i tam](https://github.com/user-attachments/assets/7f7921ce-0153-4b56-a0e8-0bd1a1c16b86)
+![403](https://github.com/user-attachments/assets/5802059f-7939-46e8-9eda-d9ae2248a09d)
+![404](https://github.com/user-attachments/assets/10e2659c-9f71-4dd2-8298-e62d7477c58d)
 
 
 
