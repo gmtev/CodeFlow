@@ -58,6 +58,8 @@ The following external API keys and secret keys are required to run this project
 ![19](https://github.com/user-attachments/assets/50ce5b4f-f001-446f-a50e-b3efd3b3d120)
 ![20](https://github.com/user-attachments/assets/df6594ee-5f6f-4f9b-bba3-445116409c3a)
 ![21](https://github.com/user-attachments/assets/573923ba-a954-4026-bb0c-2e8d90cc3387)
+![mail1](https://github.com/user-attachments/assets/d1775773-175c-4713-9edb-3d6a3553531c)
+![mail2](https://github.com/user-attachments/assets/0380390c-e746-4c41-b51e-58d6ed888268)
 
 
 
