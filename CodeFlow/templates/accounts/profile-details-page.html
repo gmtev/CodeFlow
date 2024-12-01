@@ -31,9 +31,11 @@
                     <p><strong>Username:</strong> {{ object.username }}</p>
                     <p><strong>Email:</strong> {{ object.email }}</p>
                     
-                    <!-- Edit Profile Button -->
+                    {% if request.user == object %}
                     <a href="{% url 'profile-edit' object.pk %}" class="btn btn-warning">Edit Profile</a>
+                        <a href="{% url 'credentials-edit' object.pk %}" class="btn btn-warning">Edit User Credentials</a>
                     <a href="{% url 'profile-delete' object.pk %}" class="btn btn-danger">Delete Profile</a>
+                    {% endif %}
                 </div>
             </div>
         </div>

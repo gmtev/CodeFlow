@@ -72,6 +72,7 @@ TEMPLATES = [
                 'django.template.context_processors.request',
                 'django.contrib.auth.context_processors.auth',
                 'django.contrib.messages.context_processors.messages',
+                'CodeFlow.accounts.context_processors.navbar_user',
             ],
         },
     },
@@ -83,7 +84,7 @@ WSGI_APPLICATION = 'CodeFlow.wsgi.application'
 # https://docs.djangoproject.com/en/5.1/ref/settings/#databases
 
 DATABASES = {
-    'database_credentials'
+    "database_credentials"
 }
 
 

@@ -12,7 +12,7 @@ class CustomUserAdmin(UserAdmin):
     add_form = CustomUserCreationForm
     form = CustomUserChangeForm
 
-    list_display = ('pk', 'email', 'username', 'is_staff', 'is_superuser')
+    list_display = ('pk', 'email', 'username', 'is_staff', 'is_superuser', )
     search_fields = ('email',)
     ordering = ('pk',)
     list_filter = ('is_staff', 'is_superuser', 'username')
