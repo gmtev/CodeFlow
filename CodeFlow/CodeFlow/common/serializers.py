@@ -4,11 +4,12 @@ from CodeFlow.common.models import Comment, Like
 
 class CommentSerializer(serializers.ModelSerializer):
     author_username = serializers.CharField(source='author.username', read_only=True)
+    object_id = serializers.IntegerField(read_only=True)
 
     class Meta:
         model = Comment
-        fields = ['id', 'author', 'author_id', 'author_username', 'content', 'created_at']
-        read_only_fields = ['author', 'created_at']
+        fields = ['id', 'author', 'author_id', 'author_username', 'content', 'created_at', 'object_id', ]
+        read_only_fields = ['author', 'created_at', 'object_id']
 
 
 class LikeSerializer(serializers.ModelSerializer):

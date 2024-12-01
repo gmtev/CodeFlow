@@ -99,9 +99,11 @@
 
 <!-- JavaScript -->
 <script>
+
+const currentUserId = {{ request.user.id|default:"null" }};
     // Function to Load Comments with Pagination
 async function loadComments(url) {
-    console.log("Loading comments from URL:", url); // Debugging
+
 
     const spinner = document.getElementById('loading-spinner');
     spinner.style.display = 'block';
@@ -116,25 +118,31 @@ async function loadComments(url) {
         if (!response.ok) throw new Error(`Failed to load comments: ${response.statusText}`);
 
         const data = await response.json();
-        console.log("Response data:", data); // Debugging
 
         // Clear current comments and render the new ones
         const commentsSection = document.getElementById('comments-section');
         commentsSection.innerHTML = '';
-        data.results.forEach(comment => {
-            const newComment = `
-                <div class="comment mb-3">
-                    <div class="card shadow-sm">
-                        <div class="card-body">
-                            <p><a href="/accounts/profile/${comment.author_id}/"><strong>${comment.author_username}</strong></a> said:</p>
-                            <p>${comment.content}</p>
-                            <p class="text-muted">${new Date(comment.created_at).toLocaleString()}</p>
-                        </div>
-                    </div>
+data.results.forEach(comment => {
+    
+    const isAuthor = comment.author_id === currentUserId;
+    const newComment = `
+        <div class="comment mb-3">
+            <div class="card shadow-sm">
+                <div class="card-body">
+                    <p><a href="/accounts/profile/${comment.author_id}/"><strong>${comment.author_username}</strong></a> said:</p>
+                    <p>${comment.content}</p>
+                    <p class="text-muted">${new Date(comment.created_at).toLocaleString()}</p>
+                    ${isAuthor ? `
+                        <button class="btn btn-danger btn-sm" onclick="deleteComment(${comment.id}, ${comment.object_id})">
+                            Delete
+                        </button>
+                    ` : ''}
                 </div>
-            `;
-            commentsSection.insertAdjacentHTML('beforeend', newComment);
-        });
+            </div>
+        </div>
+    `;
+    commentsSection.insertAdjacentHTML('beforeend', newComment);
+});
 
         // Update pagination
         const paginationNav = document.getElementById('pagination-nav');
@@ -177,64 +185,96 @@ async function loadComments(url) {
     }
 }
 
+// Function to Post a Comment
+async function postComment(objectId) {
+    const commentTextarea = document.getElementById('comment-textarea');
+    const commentContent = commentTextarea.value.trim();
 
-    // Function to Post a Comment
-    async function postComment(objectId) {
-        const commentTextarea = document.getElementById('comment-textarea');
-        const commentContent = commentTextarea.value.trim();
-
-        if (!commentContent) {
-            alert("Comment cannot be empty!");
-            return;
-        }
-
-        try {
-            const response = await fetch(`/api/comments/question/${objectId}/`, {
-                method: 'POST',
-                headers: {
-                    'X-CSRFToken': getCookie('csrftoken'),
-                    'Content-Type': 'application/json',
-                },
-                body: JSON.stringify({ content: commentContent }),
-            });
-
-            if (!response.ok) throw new Error('Failed to post comment.');
-
-            // Reload comments after posting
-            commentTextarea.value = '';
-            const initialUrl = `/api/comments/question/${objectId}/?page=1`;
-            loadComments(initialUrl);
-
-        } catch (error) {
-            console.error('Error posting comment:', error);
-            alert('Failed to post comment.');
-        }
+    if (!commentContent) {
+        alert("Comment cannot be empty!");
+        return;
     }
 
-    // Utility to Get CSRF Token
-    function getCookie(name) {
-        let cookieValue = null;
-        if (document.cookie && document.cookie !== '') {
-            const cookies = document.cookie.split(';');
-            for (let i = 0; i < cookies.length; i++) {
-                const cookie = cookies[i].trim();
-                if (cookie.startsWith(name + '=')) {
-                    cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
-                    break;
-                }
+    try {
+        const response = await fetch(`/api/comments/question/${objectId}/`, {
+            method: 'POST',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({ content: commentContent }),
+        });
+
+        if (!response.ok) throw new Error('Failed to post comment.');
+
+        // Reload comments after posting
+        commentTextarea.value = '';
+        const initialUrl = `/api/comments/question/${objectId}/?page=1`;
+        loadComments(initialUrl);
+
+    } catch (error) {
+        console.error('Error posting comment:', error);
+        alert('Failed to post comment.');
+    }
+}
+
+// Function to Delete a Comment
+// Function to Delete a Comment
+async function deleteComment(commentId, objectId) {
+    if (!confirm("Are you sure you want to delete this comment?")) {
+        return;
+    }
+
+    try {
+        const response = await fetch(`/api/comments/question/${objectId}/${commentId}/`, {  // Updated URL for DELETE
+            method: 'DELETE',
+            headers: {
+                'X-CSRFToken': getCookie('csrftoken'),
+                'Content-Type': 'application/json',
+            }
+        });
+
+        // Check if the request was successful
+        if (!response.ok) throw new Error('Failed to delete comment.');
+
+        // Reload comments after successful deletion
+        const initialUrl = `/api/comments/question/${objectId}/?page=1`;
+        loadComments(initialUrl);
+
+    } catch (error) {
+        console.error('Error deleting comment:', error);
+        alert('Failed to delete comment.');
+    }
+}
+
+
+
+
+
+// Utility to Get CSRF Token
+function getCookie(name) {
+    let cookieValue = null;
+    if (document.cookie && document.cookie !== '') {
+        const cookies = document.cookie.split(';');
+        for (let i = 0; i < cookies.length; i++) {
+            const cookie = cookies[i].trim();
+            if (cookie.startsWith(name + '=')) {
+                cookieValue = decodeURIComponent(cookie.substring(name.length + 1));
+                break;
             }
         }
-        return cookieValue;
     }
+    return cookieValue;
+}
 
-    // Load the first page of comments on page load
+// Load the first page of comments on page load
 document.addEventListener('DOMContentLoaded', () => {
     const initialUrl = `/api/comments/question/{{ question.id }}/?page=1`;
-    console.log("Initial URL:", initialUrl); // Debugging
 
     // Prepend window.location.origin to make it absolute
     loadComments(`${window.location.origin}${initialUrl}`);
 });
+
 document.getElementById('like-button').addEventListener('click', async function () {
     const url = this.dataset.url;  // The URL for the like/unlike action
     const likeCountSpan = document.getElementById('like-count');
@@ -257,9 +297,7 @@ document.getElementById('like-button').addEventListener('click', async function 
 
         // Parse the JSON response
         const data = await response.json();
-
-        // Debugging: Log the response to the console
-        console.log("Response from backend:", data);
+        
 
         // Update the UI based on whether the object is liked or unliked
         if (data.liked) {

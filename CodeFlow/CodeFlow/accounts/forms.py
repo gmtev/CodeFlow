@@ -19,6 +19,13 @@ class CustomAuthenticationForm(AuthenticationForm):
         widget=forms.PasswordInput(attrs={'class': 'form-control'}),
     )
 
+    def get_invalid_login_error(self):
+        return forms.ValidationError(
+            "Please enter a correct username/email and password. Note that both fields may be case-sensitive."
+        )
+
+
+
 
 class CustomUserChangeForm(UserChangeForm):
     class Meta(UserChangeForm.Meta):
