@@ -22,7 +22,6 @@ class CommentPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 20
 
-
 # class CommentListCreateView(generics.ListCreateAPIView):
 #     serializer_class = CommentSerializer
 #     permission_classes = [IsAuthenticated]

@@ -6,6 +6,9 @@ from django.contrib.contenttypes.fields import GenericForeignKey
 
 UserModel = get_user_model()
 
+# Important! Likes and Comments implemented with generic foreign key in order to be more flexible for future development
+# or changes in the project structure, as well as them being easy to be "taken out" of the project and be used
+# elsewhere, otherwise they would be tied to the common parent model of Question and Lecture.
 
 class Comment(models.Model):
     COMMENT_MAX_LENGTH = 500
