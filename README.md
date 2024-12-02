@@ -12,7 +12,7 @@ Project description:
 - Has 24 CBV's, 5 independent models, 17 forms (most of them inherit a base class), 21 templates and two custom error pages (404 and 403) extending a base.html file, a navbar and a greeting/goodbye email html files.
 - Used Django Template Engine and a bit of JS at certain places; Bootstrap was used for the design. 
 - Uses PostgreSQL as a database service.
-- Register/Login/Logout functionality with a public and a private part. Users have CRUD permissions for their related content/profile, unregistered users can only access the home page (and even if they can reach the questions or lectures dashboard by url, every next option would redirect them again to the login page).
+- Register/Login/Logout functionality with a public and a private part. Users have CRUD permissions for their related content/profile, unregistered users can only access the home page (and even if they can reach the questions or lectures dashboard by url, every next option would redirect them again to the login page). Trying to guess the needed url to access other user's edit/delete profile/credentials/content results in being redirected to the custom 403 page.
 - Customized admin site with 5 custom options to each interface; two groups of admins - superusers with full CRUD permissions and staff with CRUD permissions regarding the content (questions/lectures/sections). Roles can be managed/assigned from the site.
 - Exception handling and data validations.
 - Extended the Django user (login with either username or email) and had him in a one-to-one with the Profile model.
@@ -21,7 +21,7 @@ Project description:
 - Cloudinary used for image uploads (5 mb validation limit).
 - Integrated Markdown for the Question/Lecture/Section textfield.
 - Asynchronous operations (sending a greeting upon registration and a goodbye email upon profile deletion using MAILJET).
-- Over 10 tests written.
+- 13 tests written (remove the signals for profile creation which send greeting emails to new users while testing).
   
 ## Required External APIs and Secret Keys
 
@@ -65,11 +65,12 @@ The following external API keys and secret keys are required to run this project
 ![slednego](https://github.com/user-attachments/assets/9446ae69-30e6-4990-a9d9-ccce7ff61a8f)
 ![comment3](https://github.com/user-attachments/assets/b66e320c-e8b4-4f46-8643-4cc3b3f8e879)
 ![comment4api](https://github.com/user-attachments/assets/0c4aa90b-71fa-4609-a9c7-e65d691f7d6d)
-![comment5](https://github.com/user-attachments/assets/6e1a37bc-5b39-47d0-a9d9-aec318ed5e3b)
 ![stana tuka](https://github.com/user-attachments/assets/c1a5b949-76fe-405c-be56-a3e855f1b0f4)
 ![i tam](https://github.com/user-attachments/assets/7f7921ce-0153-4b56-a0e8-0bd1a1c16b86)
 ![403](https://github.com/user-attachments/assets/5802059f-7939-46e8-9eda-d9ae2248a09d)
 ![404](https://github.com/user-attachments/assets/10e2659c-9f71-4dd2-8298-e62d7477c58d)
+![edituser](https://github.com/user-attachments/assets/14fa0018-d6f4-4d5c-afcd-cf0d62fc4b1a)
+![tests](https://github.com/user-attachments/assets/99233d94-cc66-46f2-b69e-820fb94545b9)
 
 
 
