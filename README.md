@@ -9,7 +9,7 @@ In this repository, I will upload my project for **SoftUni's Django Advanced cou
 Project description:
 - A platform for users to publish questions/lectures regarding coding and to interact with one another.
 - Implemented using the Django Framework.
-- Has 23 CBV's, 5 independent models, 17 forms (most of them inherit a base class), 21 templates and two custom error pages (404 and 403) extending a base.html file, a navbar and a greeting/goodbye email html files.
+- Has 24 CBV's, 5 independent models, 17 forms (most of them inherit a base class), 21 templates and two custom error pages (404 and 403) extending a base.html file, a navbar and a greeting/goodbye email html files.
 - Used Django Template Engine and a bit of JS at certain places; Bootstrap was used for the design. 
 - Uses PostgreSQL as a database service.
 - Register/Login/Logout functionality with a public and a private part. Users have CRUD permissions for their related content/profile, unregistered users can only access the home page (and even if they can reach the questions or lectures dashboard by url, every next option would redirect them again to the login page).
