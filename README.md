@@ -1,9 +1,9 @@
-## Важно за проверяващите!/Important for reviewers!
-В/към анкетата за моя проект има прикачен Google Docs файл, където са налични всички нужни данни за стартирането на проекта. Той ще бъде обновяван при всяко нужно ново вписване. Отделно в долната част на "README" ще бъде показана нужната информация. При наличие на проблеми, липса на данни в документа или несъответствие, можете да се свържете с мен по всяко време. Под описанието на проекта са прикачени и релевантни снимки с цел нагледност. Благодаря Ви предварително!
+## :warning: Важно за проверяващите!/Important for reviewers! :warning:
+В/към анкетата за моя проект има прикачен Google Docs файл, където са налични всички нужни данни за стартирането на проекта. Той ще бъде обновяван при всяко нужно ново вписване. Отделно в долната част на "README" ще бъде показана нужната информация. При наличие на проблеми, липса на данни в документа или несъответствие, можете да се свържете с мен по всяко време. Под описанието на проекта са прикачени и релевантни снимки с цел нагледност. Благодаря Ви предварително! :relaxed:
 
-Attached to the survey form for my project is a Google Docs file that contains all the necessary data for starting the project. This document will be updated with every required new entry. Additionally, the necessary information will be displayed at the bottom of the "README" file. If you encounter any issues, missing data in the document, or discrepancies, you can contact me at any time. The description of the project is accompanied by relevant images for visual representation. Thank you in advance!
+Attached to the survey form for my project is a Google Docs file that contains all the necessary data for starting the project. This document will be updated with every required new entry. Additionally, the necessary information will be displayed at the bottom of the "README" file. If you encounter any issues, missing data in the document, or discrepancies, you can contact me at any time. The description of the project is accompanied by relevant images for visual representation. Thank you in advance! :relaxed:
 
-# SoftUni Django Advanced Course Project - CodeFlow
+# SoftUni Django Advanced Course Project - CodeFlow :computer: 
 
 In this repository, I will upload my project for **SoftUni's Django Advanced course**. It is made in accordance with the requirements of the task; all static images are royalty-free/stock images.
 Project description:
@@ -23,7 +23,7 @@ Project description:
 - Asynchronous operations (sending a greeting upon registration and a goodbye email upon profile deletion using MAILJET).
 - 13 tests written (remove the signals for profile creation which send greeting emails to new users while testing).
   
-## Required External APIs and Secret Keys
+## Required External APIs and Secret Keys :key:
 
 The following external API keys and secret keys are required to run this project:
 - **SECRET_KEY**: unavailable in GitHub for safety reasons.
@@ -36,7 +36,7 @@ The following external API keys and secret keys are required to run this project
 - **cloudinary_api_secret**: Cloudinary API Secret Key.
 - Database credentials in settings.py
 
-  ## Screenshots - below I will upload screenshots of the project as it is being developed.
+  ## Screenshots - below I will upload screenshots of the project as it is being developed. :framed_picture:
 ![1](https://github.com/user-attachments/assets/5e9cc9b6-1bef-4255-a41d-c7b7b66320e9)
 ![2](https://github.com/user-attachments/assets/aa7dcfb3-d12d-4fa8-90c2-901c7e09c0df)
 ![3](https://github.com/user-attachments/assets/459a3315-af43-4cae-b245-c0e2f738c39b)
