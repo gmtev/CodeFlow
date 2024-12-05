@@ -3,18 +3,15 @@
 {% block content %}
 <div class="container d-flex justify-content-center align-items-center">
     <div class="card shadow" style="width: 400px; border-radius: 10px;">
-        
-        <!-- Title Section -->
+    
         <div class="card-header text-white text-center" style="background-color: #ff6600; padding-bottom: 20px; border-radius: 10px 10px 0 0;">
             <h3>Register</h3>
         </div>
-        
-        <!-- Form Section -->
+    
         <div class="card-body p-4" style="margin-top: 10px;">
             <form method="post" enctype="multipart/form-data">
                 {% csrf_token %}
-                
-                <!-- Email Field -->
+            
                 <div class="form-group">
                     <label for="email" class="form-label">Email</label>
                     {{ form.email|add_class:"form-control" }}
@@ -26,8 +23,7 @@
                         </div>
                     {% endif %}
                 </div>
-
-                <!-- Username Field -->
+            
                 <div class="form-group mt-3">
                     <label for="username" class="form-label">Username</label>
                     {{ form.username|add_class:"form-control" }}
@@ -39,8 +35,7 @@
                         </div>
                     {% endif %}
                 </div>
-
-                <!-- Password Field -->
+            
                 <div class="form-group mt-3">
                     <label for="password1" class="form-label">Password</label>
                     {{ form.password1|add_class:"form-control" }}
@@ -52,8 +47,7 @@
                         </div>
                     {% endif %}
                 </div>
-
-                <!-- Password Confirmation Field -->
+            
                 <div class="form-group mt-3">
                     <label for="password2" class="form-label">Confirm Password</label>
                     {{ form.password2|add_class:"form-control" }}
@@ -65,13 +59,12 @@
                         </div>
                     {% endif %}
                 </div>
-
-                <!-- Submit Button -->
+            
                 <div class="d-flex justify-content-center mt-4">
                     <button type="submit" class="btn btn-primary w-100">Register</button>
                 </div>
             </form>
-        <!-- Login Prompt -->
+
                 <div class="text-center mt-3">
                     <p class="small text-muted">
                         Already have an account? 

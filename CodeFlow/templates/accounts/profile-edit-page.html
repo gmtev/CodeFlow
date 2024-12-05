@@ -4,16 +4,16 @@
 <div class="container my-5">
     <h1 class="mb-4 text-center">Edit Your Profile</h1>
 
-    <!-- Form to Edit Profile -->
+
     <form method="post" enctype="multipart/form-data">
         {% csrf_token %}
         
         <div class="row">
-            <!-- Profile Picture Section -->
+
             <div class="col-md-4 text-center">
 <div class="mb-4">
     <h5>Profile Picture</h5>
-    <!-- Profile Picture Preview -->
+
     {% if profile.profile_picture %}
         <img id="profile-picture-preview" 
              src="{{ profile.profile_picture.url }}" 
@@ -31,7 +31,7 @@
 
         
                 
-                <!-- Error Display -->
+
                 {% if form.profile_picture.errors %}
                     <div class="error">
                         {% for error in form.profile_picture.errors %}
@@ -40,7 +40,7 @@
                     </div>
                 {% endif %}
 
-                <!-- File Input for Profile Picture -->
+
                 <div class="form-group">
                     <label for="profile_picture" class="btn btn-secondary btn-block">
                         Change Profile Picture
@@ -50,7 +50,7 @@
                 </div>
             </div>
 
-            <!-- Profile Info Section -->
+
             <div class="col-md-8">
                 <div class="card shadow-sm">
                     <div class="card-body">
@@ -73,13 +73,13 @@
         </div>
     </form>
 
-    <!-- Cancel Button -->
+
     <div class="text-center mt-3">
         <a href="{% url 'profile-details' object.pk %}" class="btn btn-secondary">Cancel</a>
     </div>
 </div>
 
-<!-- JavaScript for Real-Time Image Preview -->
+
 <script>
     function previewImage(event) {
         // Get the selected file

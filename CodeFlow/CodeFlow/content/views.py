@@ -1,4 +1,4 @@
-from django.contrib.auth.mixins import LoginRequiredMixin, UserPassesTestMixin
+from django.contrib.auth.mixins import LoginRequiredMixin
 from django.contrib.contenttypes.models import ContentType
 from django.core.exceptions import PermissionDenied
 from django.shortcuts import get_object_or_404
@@ -11,7 +11,7 @@ from CodeFlow.content.forms import LectureCreateForm, LectureDeleteForm, Lecture
 from CodeFlow.content.forms import SectionCreateForm, SectionEditForm
 from CodeFlow.common.forms import CommentForm
 from CodeFlow.content.models import Question, Lecture, Section
-from CodeFlow.content.mixins import SectionAuthorMixin
+from CodeFlow.content.mixins import SectionAuthorPassesTestMixin, QuestionAuthorPassesTestMixin, LectureAuthorPassesTestMixin
 
 class QuestionListView(ListView):
     model = Question
@@ -60,15 +60,11 @@ class QuestionCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class QuestionEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class QuestionEditView(LoginRequiredMixin, QuestionAuthorPassesTestMixin, UpdateView):
     model = Question
     template_name = 'content/questions/question-edit-page.html'
     form_class = QuestionEditForm
     slug_url_kwarg = 'slug'
-
-    def test_func(self):
-        question = get_object_or_404(Question, slug=self.kwargs['slug'])
-        return self.request.user == question.author
 
 
     def get_success_url(self):
@@ -79,7 +75,7 @@ class QuestionEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             }
         )
 
-class QuestionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class QuestionDeleteView(LoginRequiredMixin, QuestionAuthorPassesTestMixin, DeleteView):
     model = Question
     template_name = 'content/questions/question-delete-page.html'
     slug_url_kwarg = 'slug'
@@ -89,10 +85,6 @@ class QuestionDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
         return reverse_lazy(
             'questions'
         )
-
-    def test_func(self):
-        question = get_object_or_404(Question, slug=self.kwargs['slug'])
-        return self.request.user == question.author
 
     def get_initial(self) -> dict:
         return self.get_object().__dict__
@@ -141,15 +133,12 @@ class LectureCreateView(LoginRequiredMixin, CreateView):
         form.instance.author = self.request.user
         return super().form_valid(form)
 
-class LectureEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
+class LectureEditView(LoginRequiredMixin, LectureAuthorPassesTestMixin, UpdateView):
     model = Lecture
     template_name = 'content/lectures/lecture-edit-page.html'
     form_class = LectureEditForm
     slug_url_kwarg = 'slug'
 
-    def test_func(self):
-        lecture = get_object_or_404(Lecture, slug=self.kwargs['slug'])
-        return self.request.user == lecture.author
 
     def get_success_url(self):
         return reverse_lazy(
@@ -159,7 +148,7 @@ class LectureEditView(LoginRequiredMixin, UserPassesTestMixin, UpdateView):
             }
         )
 
-class LectureDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
+class LectureDeleteView(LoginRequiredMixin, LectureAuthorPassesTestMixin, DeleteView):
     model = Lecture
     template_name = 'content/lectures/lecture-delete-page.html'
     slug_url_kwarg = 'slug'
@@ -170,9 +159,6 @@ class LectureDeleteView(LoginRequiredMixin, UserPassesTestMixin, DeleteView):
             'lectures'
         )
 
-    def test_func(self):
-        lecture = get_object_or_404(Lecture, slug=self.kwargs['slug'])
-        return self.request.user == lecture.author
 
     def get_initial(self) -> dict:
         return self.get_object().__dict__
@@ -216,7 +202,7 @@ class SectionCreateView(LoginRequiredMixin, CreateView):
 
 
 
-class SectionEditView(LoginRequiredMixin, SectionAuthorMixin, UpdateView):
+class SectionEditView(LoginRequiredMixin, SectionAuthorPassesTestMixin, UpdateView):
     model = Section
     form_class = SectionEditForm
     template_name = "content/sections/section-edit-page.html"
@@ -226,7 +212,7 @@ class SectionEditView(LoginRequiredMixin, SectionAuthorMixin, UpdateView):
         return reverse_lazy("lecture-details", kwargs={"slug": lecture.slug})
 
 
-class SectionDeleteView(LoginRequiredMixin, SectionAuthorMixin, DeleteView):
+class SectionDeleteView(LoginRequiredMixin, SectionAuthorPassesTestMixin, DeleteView):
     model = Section
     template_name = "content/sections/section-delete-page.html"
 

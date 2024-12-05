@@ -29,13 +29,13 @@
         </div>
     </div>
 
-    <!-- Pagination Section -->
+
     <div class="mt-auto">
         <div class="d-flex flex-column align-items-center">
-            <!-- Page Number -->
+
             <p>Page {{ page_obj.number }} of {{ page_obj.paginator.num_pages }}</p>
             
-            <!-- Pagination Controls -->
+
             <nav aria-label="Page navigation">
                 <ul class="pagination justify-content-center">
                     {% if page_obj.has_previous %}
