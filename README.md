@@ -3,11 +3,11 @@ Deployed at https://codeflow-chfchee9gkeuf6c3.italynorth-01.azurewebsites.net/
 
 Тази репозитория е оставена за localhost версия на проекта; репозиторията на deploy-натата версия е https://github.com/gmtev/CodeFlowDeployed 
 
-Единствената разлика е в настройките на проекта, но това repo е посочено като официалното за нагледност и поради неизбежното изтичане на безплатния лимит.
+Единствената разлика е в настройките на проекта, но това repo е посочено като официалното за нагледност и поради неизбежното изтичане на безплатния лимит. Затова и тук са подробното описание и документация на проекта.
 
 This repository is left for the localhost version of the project; the deployed one is https://github.com/gmtev/CodeFlowDeployed 
 
-The only difference is in the project settings, but this repo has been designated as the official one for reference and due to the inevitable exhaustion of the free limit.
+The only difference is in the project settings, but this repo has been designated as the official one for reference and due to the inevitable exhaustion of the free limit. Therefore, here is the detailed description and documentation of the project.
 
 В/към анкетата за моя проект има прикачен Google Docs файл, където са налични всички нужни данни за стартирането на проекта. Той ще бъде обновяван при всяко нужно ново вписване. Отделно в долната част на "README" ще бъде показана нужната информация. При наличие на проблеми, липса на данни в документа или несъответствие, можете да се свържете с мен по всяко време. Под описанието на проекта са прикачени и релевантни снимки с цел нагледност. Благодаря Ви предварително! :relaxed:
 
