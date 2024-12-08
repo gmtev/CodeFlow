@@ -30,12 +30,12 @@ Project description:
 - Likes and Comments implemented with generic foreign key in order to be more flexible for future development or changes in the project structure, as well as them being easy to be "taken out" of the project and be used elsewhere, otherwise they would be tied to the common parent model of Question and Lecture.
 - Cloudinary used for image uploads (5 mb validation limit).
 - Integrated Markdown for the Question/Lecture/Section textfield.
-- Asynchronous operations (sending a greeting upon registration and a goodbye email upon profile deletion using MAILJET).
+- Sending a greeting upon registration and a goodbye email upon profile deletion using MAILJET.
 - 13 tests written (remove the signals for profile creation which send greeting emails to new users while testing).
   
 ## Required External APIs and Secret Keys :key:
 
-The following external API keys and secret keys are required to run this project:
+The following external API keys and secret keys are required to run the localhost version of the project:
 - **SECRET_KEY**: unavailable in GitHub for safety reasons.
 - **MAILJET_API_KEY**: Mailjet API Key. 
 - **MAILJET_SECRET_KEY**: Mailjet Secret Key.  
