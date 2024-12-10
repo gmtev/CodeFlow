@@ -8,6 +8,7 @@ from rest_framework.pagination import PageNumberPagination
 from rest_framework import generics, status
 from rest_framework.response import Response
 from rest_framework.permissions import IsAuthenticated
+
 class HomePageView(TemplateView):
     template_name = "common/home-page.html"
 
@@ -22,7 +23,7 @@ class CommentPagination(PageNumberPagination):
     page_size_query_param = 'page_size'
     max_page_size = 20
 
-# class CommentListCreateView(generics.ListCreateAPIView):
+# class CommentListCreateView(generics.ListCreateAPIView): other way of implementing the view below
 #     serializer_class = CommentSerializer
 #     permission_classes = [IsAuthenticated]
 #     pagination_class = CommentPagination
