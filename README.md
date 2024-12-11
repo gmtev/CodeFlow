@@ -1,5 +1,5 @@
 ## :warning: Важно за проверяващите!/Important for reviewers! :warning:
-Deployed at https://codeflow-chfchee9gkeuf6c3.italynorth-01.azurewebsites.net/ 
+Deployed at https://codeflow-chfchee9gkeuf6c3.italynorth-01.azurewebsites.net/   Python interpreter: 3.12
 
 Тази репозитория е оставена за localhost версия на проекта; репозиторията на deploy-натата версия е https://github.com/gmtev/CodeFlowDeployed 
 
