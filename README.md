@@ -1,7 +1,11 @@
 ## :warning: Важно за проверяващите!/Important for reviewers! :warning:
-Deployed at https://codeflow-chfchee9gkeuf6c3.italynorth-01.azurewebsites.net/   Python interpreter: 3.12
+Deployed at https://codeflow-chfchee9gkeuf6c3.italynorth-01.azurewebsites.net/   Python interpreter: 3.12   
 
-Тази репозитория е оставена за localhost версия на проекта; репозиторията на deploy-натата версия е https://github.com/gmtev/CodeFlowDeployed 
+Проверете прикаченият Google Docs файл за credential-ите на админа, за да имате достъп до админ интерфейса и да можете да видите създадените две групи админи - superusers и staff.
+
+Check the attached Google Docs file for the admin credentials to gain access to the admin interface and view the two created admin groups – superusers and staff.
+
+Тази репозитория е оставена за localhost версията на проекта; репозиторията на deploy-натата версия е https://github.com/gmtev/CodeFlowDeployed 
 
 Единствената разлика е в настройките на проекта, но това repo е посочено като официалното за нагледност и поради неизбежното изтичане на безплатния лимит. Затова и тук са подробното описание и документация на проекта.
 
