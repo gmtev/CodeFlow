@@ -29,7 +29,7 @@ Project description:
 - Register/Login/Logout functionality with a public and a private part. Users have CRUD permissions for their related content/profile, unregistered users can only access the home page (and even if they can reach the questions or lectures dashboard by url, every next option would redirect them again to the login page). Trying to guess the needed url to access other user's edit/delete profile/credentials/content results in being redirected to the custom 403 page.
 - Customized admin site with 5 custom options to each interface; two groups of admins - superusers with full CRUD permissions and staff with CRUD permissions regarding the content (questions/lectures/sections). Roles can be managed/assigned from the site.
 - Exception handling and data validations.
-- Extended the Django user (login with either username or email) and had him in a one-to-one with the Profile model.
+- Extended the Django user (login with either username or email) and had him in an one-to-one relation with the Profile model.
 - RESTful Likes and Comments (like/unlike, add and remove comment).
 - Likes and Comments implemented with generic foreign key in order to be more flexible for future development or changes in the project structure, as well as them being easy to be "taken out" of the project and be used elsewhere, otherwise they would be tied to the common parent model of Question and Lecture.
 - Cloudinary used for image uploads (5 mb validation limit).
