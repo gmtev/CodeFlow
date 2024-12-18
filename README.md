@@ -1,25 +1,8 @@
-## :warning: Важно за проверяващите!/Important for reviewers! :warning:
-Deployed at https://codeflow-chfchee9gkeuf6c3.italynorth-01.azurewebsites.net/   Python interpreter: 3.12   
+Python interpreter version: 3.12   
 
-Проверете прикаченият Google Docs файл за credential-ите на админа, за да имате достъп до админ интерфейса и да можете да видите създадените две групи админи - superusers и staff.
+# SoftUni Django Advanced Course Project - CodeFlow :computer: (Graded 6.00 - max points)
 
-Check the attached Google Docs file for the admin credentials to gain access to the admin interface and view the two created admin groups – superusers and staff.
-
-Тази репозитория е оставена за localhost версията на проекта; репозиторията на deploy-натата версия е https://github.com/gmtev/CodeFlowDeployed 
-
-Единствената разлика е в настройките на проекта, но това repo е посочено като официалното за нагледност и поради неизбежното изтичане на безплатния лимит. Затова и тук са подробното описание и документация на проекта.
-
-This repository is left for the localhost version of the project; the deployed one is https://github.com/gmtev/CodeFlowDeployed 
-
-The only difference is in the project settings, but this repo has been designated as the official one for reference and due to the inevitable exhaustion of the free limit. Therefore, here is the detailed description and documentation of the project.
-
-В/към анкетата за моя проект има прикачен Google Docs файл, където са налични всички нужни данни за стартирането на проекта. Той ще бъде обновяван при всяко нужно ново вписване. Отделно в долната част на "README" ще бъде показана нужната информация. При наличие на проблеми, липса на данни в документа или несъответствие, можете да се свържете с мен по всяко време. Под описанието на проекта са прикачени и релевантни снимки с цел нагледност. Благодаря Ви предварително! :relaxed:
-
-Attached to the survey form for my project is a Google Docs file that contains all the necessary data for starting the project. This document will be updated with every required new entry. Additionally, the necessary information will be displayed at the bottom of the "README" file. If you encounter any issues, missing data in the document, or discrepancies, you can contact me at any time. The description of the project is accompanied by relevant images for visual representation. Thank you in advance! :relaxed:
-
-# SoftUni Django Advanced Course Project - CodeFlow :computer: 
-
-In this repository, I will upload my project for **SoftUni's Django Advanced course**. It is made in accordance with the requirements of the task; all static images are royalty-free/stock images.
+In this repository, you will find my project for **SoftUni's Django Advanced course**. It is made in accordance with the requirements of the task; all static images are royalty-free/stock images.
 Project description:
 - A platform for users to publish questions/lectures regarding coding and to interact with one another.
 - Implemented using the Django Framework.
